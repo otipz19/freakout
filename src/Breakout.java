@@ -60,9 +60,7 @@ public class Breakout extends GraphicsProgram {
 /* Method: run() */
 /** Runs the Breakout program. */
 	public void run() {
-		/* You fill this in, along with any subsidiary methods */
-		//Hello, world!s
-		//sasat
+		BrickGenerator generator = new BrickGenerator(0, 0, BRICK_SEP,  BRICK_SEP, NBRICKS_PER_ROW, NBRICK_ROWS, BRICK_WIDTH, BRICK_HEIGHT, this);
 	}
 
 }
