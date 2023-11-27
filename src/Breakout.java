@@ -47,6 +47,7 @@ public class Breakout extends GraphicsProgram {
 
 /** Height of a brick */
 	private static final int BRICK_HEIGHT = 8;
+	private static final int DELTA_TIME = 50;
 
 /** Radius of the ball in pixels */
 	private static final int BALL_RADIUS = 10;
@@ -62,6 +63,13 @@ public class Breakout extends GraphicsProgram {
 	public void run() {
 		/* You fill this in, along with any subsidiary methods */
 		//Hello, world!s
+		BoxContainer cont = new BoxContainer(0,0,APPLICATION_WIDTH,APPLICATION_HEIGHT);
+		BreakerBall ball = new BreakerBall(10,10,200,200,50,50);
+		add(ball);
+		while(true){
+			ball.update();
+			pause(DELTA_TIME);
+		}
 	}
 
 }
