@@ -67,17 +67,20 @@ public class Breakout extends GraphicsProgram {
 /* Method: run() */
 /** Runs the Breakout program. */
 	public void run() {
+<<<<<<< HEAD
+		/* You fill this in, along with any subsidiary methods */
+		//Hello, world!s
 		BoxContainer cont = new BoxContainer(0,0,APPLICATION_WIDTH,APPLICATION_HEIGHT);
 		BreakerBall ball = new BreakerBall(10,10,200,200,50,50);
 		add(ball);
-		paddle = new Paddle(paddleImage, paddleWidth, paddleHeight);
-		add(paddle, (WIDTH-paddleWidth)/2 , paddleY);
-		addMouseListeners();
 		while(true){
 			ball.update();
 			pause(DELTA_TIME);
 		}
-
+=======
+		paddle = new Paddle(paddleImage, paddleWidth, paddleHeight);
+		add(paddle, (WIDTH-paddleWidth)/2 , paddleY);
+		addMouseListeners();
 	}
 	public void mouseMoved(MouseEvent e){
 		int x;
@@ -88,5 +91,6 @@ public class Breakout extends GraphicsProgram {
 		else
 			x = e.getX()-paddleWidth/2;
 		paddle.setLocation(x, paddleY);
+>>>>>>> paddle
 	}
 }
