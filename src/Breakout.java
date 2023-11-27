@@ -17,7 +17,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Breakout extends GraphicsProgram {
-
 /** Width and height of application window in pixels */
 	public static final int APPLICATION_WIDTH = 1000;
 	public static final int APPLICATION_HEIGHT = 900;
@@ -64,12 +63,20 @@ public class Breakout extends GraphicsProgram {
 	private int paddleY = HEIGHT*5/6;
 	private String paddleImage = "images/paddle.jpg";
 
-/* Method: run() */
-/** Runs the Breakout program. */
+	private static GraphicsProgram instance;
+
+	public static GraphicsProgram getInstance(){
+		return instance;
+	}
+
+	public void init(){
+		instance = this;
+	}
+
 	public void run() {
 		BrickGenerator generator = new BrickGenerator(0, 0, BRICK_SEP,  BRICK_SEP, NBRICKS_PER_ROW, NBRICK_ROWS, BRICK_WIDTH, BRICK_HEIGHT, this);
 		BoxContainer cont = new BoxContainer(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
-		BreakerBall ball = new BreakerBall(10, 10, 200, 200, 50, 50);
+		BreakerBall ball = new BreakerBall(25, 25, 200, 200, 50, 50);
 		add(ball);
 		paddle = new Paddle(paddleImage, paddleWidth, paddleHeight);
 		add(paddle, (WIDTH - paddleWidth) / 2, paddleY);
