@@ -67,18 +67,19 @@ public class Breakout extends GraphicsProgram {
 /* Method: run() */
 /** Runs the Breakout program. */
 	public void run() {
-		BoxContainer cont = new BoxContainer(0,0,APPLICATION_WIDTH,APPLICATION_HEIGHT);
-		BreakerBall ball = new BreakerBall(10,10,200,200,50,50);
+		BrickGenerator generator = new BrickGenerator(0, 0, BRICK_SEP,  BRICK_SEP, NBRICKS_PER_ROW, NBRICK_ROWS, BRICK_WIDTH, BRICK_HEIGHT, this);
+		BoxContainer cont = new BoxContainer(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+		BreakerBall ball = new BreakerBall(10, 10, 200, 200, 50, 50);
 		add(ball);
 		paddle = new Paddle(paddleImage, paddleWidth, paddleHeight);
-		add(paddle, (WIDTH-paddleWidth)/2 , paddleY);
+		add(paddle, (WIDTH - paddleWidth) / 2, paddleY);
 		addMouseListeners();
-		while(true){
+		while (true) {
 			ball.update();
 			pause(DELTA_TIME);
 		}
-
 	}
+
 	public void mouseMoved(MouseEvent e){
 		int x;
 		if ((e.getX()+paddleWidth/2) > WIDTH)
