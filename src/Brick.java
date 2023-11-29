@@ -12,4 +12,9 @@ public class Brick extends GCompound {
         rect.setFilled(true);
         add(rect);
     }
+
+    public void onCollision(){
+        BricksManager.getInstance().brickDestroyed();
+        Breakout.getInstance().remove(this);
+    }
 }

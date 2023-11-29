@@ -73,8 +73,9 @@ public class BreakerBall extends GCompound {
 
     private void checkCollisionsWithObjects() {
         GObject object = collideAndReturnObject();
-        if (object != null) {
-
+        if (object != null && object instanceof Brick) {
+            Brick brick = (Brick)object;
+            brick.onCollision();
         }
     }
 
