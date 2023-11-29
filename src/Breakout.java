@@ -10,7 +10,7 @@ public class Breakout extends GraphicsProgram {
 
 	private static GraphicsProgram instance;
 
-	private FirstLevel level;
+	private Level level;
 
 	public static GraphicsProgram getInstance(){
 		return instance;
