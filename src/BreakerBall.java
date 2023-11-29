@@ -3,8 +3,6 @@ import acm.graphics.GObject;
 import acm.graphics.GOval;
 import acm.graphics.GPoint;
 
-import java.security.PrivateKey;
-
 public class BreakerBall extends GCompound {
     private float AccelerationX = 0;
     private float AccelerationY = 0;
@@ -74,24 +72,35 @@ public class BreakerBall extends GCompound {
     }
 
     private void checkCollisionsWithObjects() {
-        GObject object = getObjectAtColliderPoints();
+        GObject object = collideAndReturnObject();
         if (object != null) {
-            if (object instanceof Paddle) {
-                VelocityY *= -1;
-            }
-            else if(object instanceof Brick){
-                VelocityY *= -1;
-            }
+
         }
     }
 
-    private GObject getObjectAtColliderPoints() {
-        for (double y = getY(); y <= getY() + Height; y += Height / 2) {
-            for (double x = getX(); x <= getX() + Width; x += Width / 2) {
-                GObject object = Breakout.getInstance().getElementAt(x, y);
-                if (object != null && object != this) {
-                    return object;
+    /**
+     * Checks collisions by 8 points.
+     * Each point is got by rotating around the centre of ball,
+     * starting from the centre of right side of circumscribed square
+     */
+    private GObject collideAndReturnObject(){
+        double startX = getX() + Width;
+        double startY = getY() + Height / 2;
+        double midX = getX() + Width / 2;
+        double midY = getY() + Height / 2;
+        for(double angle = 0; angle <= 360; angle += 45){
+            double radians = Math.toRadians(angle);
+            double xTurned = midX + (startX - midX) * Math.cos(radians) - (startY - midY) * Math.sin(radians);
+            double yTurned = midY + (startX - midX) * Math.sin(radians) + (startY - midY) * Math.cos(radians);
+            GObject object = Breakout.getInstance().getElementAt(xTurned, yTurned);
+            if(object != null && object != this){
+                if(angle == 0 || angle == 180){
+                    VelocityX *= -1;
                 }
+                else{
+                    VelocityY *= -1;
+                }
+                return object;
             }
         }
         return null;

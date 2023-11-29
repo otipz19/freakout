@@ -36,7 +36,7 @@ public class Breakout extends GraphicsProgram {
 	private static final int NBRICKS_PER_ROW = 10;
 
 /** Number of rows of bricks */
-	private static final int NBRICK_ROWS = 10;
+	private static final int NBRICK_ROWS = 5;
 
 /** Separation between bricks */
 	private static final int BRICK_SEP = 4;
@@ -46,11 +46,11 @@ public class Breakout extends GraphicsProgram {
 	  (WIDTH - (NBRICKS_PER_ROW - 1) * BRICK_SEP) / NBRICKS_PER_ROW;
 
 /** Height of a brick */
-	private static final int BRICK_HEIGHT = 8;
-	private static final int DELTA_TIME = 50;
+	private static final int BRICK_HEIGHT = 20;
+	private static final int DELTA_TIME = 25;
 
 /** Radius of the ball in pixels */
-	private static final int BALL_RADIUS = 10;
+	private static final int BALL_RADIUS = 20;
 
 /** Offset of the top brick row from the top */
 	private static final int BRICK_Y_OFFSET = 70;
@@ -76,7 +76,7 @@ public class Breakout extends GraphicsProgram {
 	public void run() {
 		BrickGenerator generator = new BrickGenerator(0, 0, BRICK_SEP,  BRICK_SEP, NBRICKS_PER_ROW, NBRICK_ROWS, BRICK_WIDTH, BRICK_HEIGHT, this);
 		BoxContainer cont = new BoxContainer(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
-		BreakerBall ball = new BreakerBall(25, 25, 200, 200, 50, 50);
+		BreakerBall ball = new BreakerBall(10, 10, 200, 200, BALL_RADIUS * 2, BALL_RADIUS * 2);
 		add(ball);
 		paddle = new Paddle(paddleImage, paddleWidth, paddleHeight);
 		add(paddle, (WIDTH - paddleWidth) / 2, paddleY);
