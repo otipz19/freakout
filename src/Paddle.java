@@ -3,13 +3,13 @@ import acm.graphics.GImage;
 import acm.graphics.GRect;
 
 public class Paddle extends GCompound {
-    //private GImage body;
-    private GRect body;
+    private static final String PADDLE_IMAGE = "images/paddle.jpg";
+    private GImage body;
+
     private int width,height;
-    public Paddle(String image, int width, int height) {
-        //body = new GImage(image);
-        body = new GRect(width, height);
-        //this.body.setSize(width, height);
+    public Paddle(int width, int height) {
+        body = new GImage(PADDLE_IMAGE);
+        this.body.setSize(width, height);
         add(this.body);
     }
 
