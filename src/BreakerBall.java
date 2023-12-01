@@ -1,6 +1,8 @@
 import acm.graphics.*;
+import acm.program.GraphicsProgram;
 
 public class BreakerBall extends GCompound {
+    private GOval ball;
     private float AccelerationX = 0;
     private float AccelerationY = 0;
     private float VelocityX;
@@ -9,6 +11,8 @@ public class BreakerBall extends GCompound {
     private float PositionY;
     private float Width;
     private float Height;
+    private BoxContainer container = BoxContainer.getContainer();
+    private GraphicsProgram program = Breakout.getInstance();
 
     /**
      * Full constructor.(AccelerationX,AccelerationY,VelocityX,VelocityY,PosX,PosY,Width,Height
@@ -42,7 +46,7 @@ public class BreakerBall extends GCompound {
     public void update() {
         updateStatesNoCollision();
         collideWithContainer();
-        checkCollisionsWithObjects();
+        collideWithObjects();
         move(VelocityX, VelocityY);
     }
 
@@ -57,7 +61,7 @@ public class BreakerBall extends GCompound {
     }
 
     private void collideWithContainer() {
-        GPoint ReflectVec = BoxContainer.getContainer().reflect(PositionX, PositionY, Width, Height);
+        GPoint ReflectVec = container.reflect(PositionX, PositionY, Width, Height);
         VelocityX *= ReflectVec.getX();
         VelocityY *= ReflectVec.getY();
     }
@@ -66,9 +70,10 @@ public class BreakerBall extends GCompound {
         GOval ov = new GOval(0, 0, Width, Height);
         ov.setFilled(true);
         add(ov);
+        ball = ov;
     }
 
-    private void checkCollisionsWithObjects() {
+    private void collideWithObjects() {
         CollisionInfo collisionInfo = getObjectAtColliderPoints();
         if (collisionInfo != null) {
             GObject object = collisionInfo.getObject();
@@ -85,7 +90,7 @@ public class BreakerBall extends GCompound {
     private CollisionInfo getObjectAtColliderPoints() {
         for (double y = getY(); y <= getY() + Height; y += Height / 2) {
             for (double x = getX(); x <= getX() + Width; x += Width / 2) {
-                GObject object = Breakout.getInstance().getElementAt(x, y);
+                GObject object = program.getElementAt(x, y);
                 if (object != null && object != this) {
                     return new CollisionInfo(x, y, object);
                 }

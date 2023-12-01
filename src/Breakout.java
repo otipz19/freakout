@@ -75,7 +75,7 @@ public class Breakout extends GraphicsProgram {
 
 	public void run() {
 		BrickGenerator generator = new BrickGenerator(0, 0, BRICK_SEP,  BRICK_SEP, NBRICKS_PER_ROW, NBRICK_ROWS, BRICK_WIDTH, BRICK_HEIGHT, this);
-		BoxContainer cont = new BoxContainer(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+		BoxContainer cont = new BoxContainer(0, 0, WIDTH, HEIGHT);
 		BreakerBall ball = new BreakerBall(25, 25, 200, 200, 50, 50);
 		add(ball);
 		paddle = new Paddle(paddleImage, paddleWidth, paddleHeight);

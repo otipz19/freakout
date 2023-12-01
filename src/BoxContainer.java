@@ -13,7 +13,7 @@ public class BoxContainer {
     /**
      * creates a basic box container(xTop, yTop,xBottom,yBottom)
      */
-    BoxContainer(float x1, float y1, float x2, float y2){
+    BoxContainer(float x1, float y1, float x2, float y2){                             // Why ???
         TopX=x1;
         TopY=y1;
         BottomX=x2;
