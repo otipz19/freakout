@@ -69,6 +69,7 @@ public class Breakout extends GraphicsProgram {
 	}
 
 	public void run() {
+		//lolololool
 		BricksManager bricksManager = new BricksManager(0, 0, BRICK_SEP,  BRICK_SEP, NBRICKS_PER_ROW, NBRICK_ROWS, BRICK_WIDTH, BRICK_HEIGHT);
 		BoxContainer cont = new BoxContainer(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
 		BreakerBall ball = new BreakerBall(10, 10, 200, 200, BALL_RADIUS * 2, BALL_RADIUS * 2);
