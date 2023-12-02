@@ -2,16 +2,23 @@ import acm.graphics.GCompound;
 import acm.graphics.GObject;
 import acm.graphics.GOval;
 import acm.graphics.GPoint;
+import acm.program.GraphicsProgram;
 
 public class BreakerBall extends GCompound {
-    private float AccelerationX = 0;
-    private float AccelerationY = 0;
-    private float VelocityX;
-    private float VelocityY;
-    private float PositionX;
-    private float PositionY;
-    private float Width;
-    private float Height;
+    private double AccelerationX = 0;
+    private double AccelerationY = 0;
+    private double VelocityX;
+    private double VelocityY;
+    private double PositionX;
+    private double PositionY;
+    private double Width;
+    private double Height;
+    private boolean isActive;
+    public void setActive(boolean opt){
+        isActive = opt;
+    }
+
+    private Breakout program = Breakout.getInstance();
 
     /**
      * Full constructor.(AccelerationX,AccelerationY,VelocityX,VelocityY,PosX,PosY,Width,Height
@@ -25,6 +32,7 @@ public class BreakerBall extends GCompound {
         PositionY = Py;
         Width = W;
         Height = H;
+        isActive = true;
         construct();
     }
 
@@ -39,14 +47,17 @@ public class BreakerBall extends GCompound {
         setLocation(PositionX, PositionY);
         Width = W;
         Height = H;
+        isActive = true;
         construct();
     }
 
     public void update() {
-        updateStatesNoCollision();
-        collideWithContainer();
-        checkCollisionsWithObjects();
-        move(VelocityX, VelocityY);
+        if(isActive) {
+            updateStatesNoCollision();
+            collideWithContainer();
+            checkCollisionsWithObjects();
+            move(VelocityX, VelocityY);
+        }
     }
 
     /**
@@ -61,8 +72,21 @@ public class BreakerBall extends GCompound {
 
     private void collideWithContainer() {
         GPoint ReflectVec = BoxContainer.getContainer().reflect(PositionX, PositionY, Width, Height);
-        VelocityX *= ReflectVec.getX();
-        VelocityY *= ReflectVec.getY();
+        if (ReflectVec == null){
+            handleOutOfBounds();
+        } else {
+            VelocityX *= ReflectVec.getX();
+            VelocityY *= ReflectVec.getY();
+        }
+    }
+
+    private void handleOutOfBounds(){
+        GPoint center = BoxContainer.getContainer().getCenter();
+        setLocation(center);
+        PositionX = center.getX();
+        PositionY = center.getY();
+        setActive(false);
+        Breakout.getLevel().decrementLife();
     }
 
     private void construct() {
@@ -93,7 +117,7 @@ public class BreakerBall extends GCompound {
             double radians = Math.toRadians(angle);
             double xTurned = midX + (startX - midX) * Math.cos(radians) - (startY - midY) * Math.sin(radians);
             double yTurned = midY + (startX - midX) * Math.sin(radians) + (startY - midY) * Math.cos(radians);
-            GObject object = Breakout.getInstance().getElementAt(xTurned, yTurned);
+            GObject object = program.getElementAt(xTurned, yTurned);
             if(object != null && object != this){
                 if(angle == 0 || angle == 180){
                     VelocityX *= -1;

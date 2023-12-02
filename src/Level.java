@@ -1,3 +1,5 @@
+import acm.program.GraphicsProgram;
+
 import java.awt.event.MouseEvent;
 
 public abstract class Level {
@@ -33,24 +35,38 @@ public abstract class Level {
     protected BreakerBall ball;
     protected BricksManager bricksManager;
     protected BoxContainer container;
+    protected Breakout program = Breakout.getInstance();
+    protected int lives;
     protected boolean isStarted;
+    protected boolean isEnded;
 
     public Level(int width, int height) {
         this.width = width;
         this.height = height;
-        this.brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
     }
 
-    public abstract void start();
+    public void setup(){
+        isStarted = true;
+    }
 
     public abstract void update();
+
+    public void end(){
+        program.removeAll();
+        Breakout.setLevel(null);
+    }
 
     public boolean isStarted() {
         return isStarted;
     }
 
     public boolean isEnded() {
-        return !bricksManager.anyBricksPresent();
+        isEnded = isEnded || !bricksManager.anyBricksPresent() || lives <= 0;
+        return isEnded;
+    }
+
+    public void decrementLife(){
+        lives--;
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -62,5 +78,9 @@ public abstract class Level {
         else
             x = e.getX() - paddleWidth / 2;
         paddle.setLocation(x, paddle.getY());
+    }
+
+    public void mouseClicked(MouseEvent e){
+        ball.setActive(true);
     }
 }

@@ -8,11 +8,13 @@ public class Breakout extends GraphicsProgram {
 	public static final int APPLICATION_HEIGHT = 900;
 	private static final int DELTA_TIME = 25;
 
-	private static GraphicsProgram instance;
+	private static Breakout instance;
 
-	private Level level;
+	private static Level level;
+	public static Level getLevel(){ return level;}
+	public static void setLevel(Level lvl){ level = lvl; }
 
-	public static GraphicsProgram getInstance(){
+	public static Breakout getInstance(){
 		return instance;
 	}
 
@@ -23,8 +25,12 @@ public class Breakout extends GraphicsProgram {
 
 	public void run() {
 		level = new FirstLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
-		level.start();
-		while (!level.isEnded()) {
+		playLevel(level);
+	}
+
+	public void playLevel(Level level){
+		level.setup();
+		while (level != null) {
 			level.update();
 			pause(DELTA_TIME);
 		}
@@ -33,6 +39,11 @@ public class Breakout extends GraphicsProgram {
 	public void mouseMoved(MouseEvent e){
 		if(level != null && level.isStarted() && !level.isEnded()){
 			level.mouseMoved(e);
+		}
+	}
+	public void mouseClicked(MouseEvent e){
+		if(level != null && level.isStarted() && !level.isEnded()){
+			level.mouseClicked(e);
 		}
 	}
 }
