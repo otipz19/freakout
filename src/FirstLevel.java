@@ -4,7 +4,7 @@ public class FirstLevel extends Level {
     public FirstLevel(int width, int height){
         super(width, height);
         paddleWidth = 200;
-        paddleHeight = 50;
+        paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
         bricksPerRow = 2;
         bricksRows = 1;

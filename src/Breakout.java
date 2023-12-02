@@ -6,7 +6,7 @@ public class Breakout extends GraphicsProgram {
 /** Width and height of application window in pixels */
 	public static final int APPLICATION_WIDTH = 1000;
 	public static final int APPLICATION_HEIGHT = 900;
-	private static final int DELTA_TIME = 25;
+	private static final int DELTA_TIME = 10;
 
 	private static Breakout instance;
 
@@ -17,6 +17,7 @@ public class Breakout extends GraphicsProgram {
 	}
 
 	private static RestartMenu restartMenu;
+	private static LevelMenu levelMenu;
 	private static LevelType lastLevelType = LevelType.FIRST;
 
 	public static Level getLevel(){
@@ -48,19 +49,32 @@ public class Breakout extends GraphicsProgram {
 	}
 
 	public void run() {
+		drawLevelMenu();
+		while(!levelMenu.isClicked()){
+			pause(100);
+		}
 		while(true){
-			restartMenu = new RestartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT, "Breakout", "Play");
-			while(level == null){
-				waitForClick();
-			}
-			while (true){
-				setLevelType(lastLevelType);
+			if(level != null){
 				playLevel(level);
+				drawRestartMenu();
+				while(!restartMenu.isClicked()){
+					pause(100);
+				}
 			}
 		}
 	}
 
-	public void playLevel(Level level){
+	private void drawRestartMenu() {
+		removeAll();
+		restartMenu = new RestartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT, "Breakout", "Restart");
+	}
+
+	public static void drawLevelMenu() {
+		instance.removeAll();
+		levelMenu = new LevelMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+	}
+
+	private void playLevel(Level level){
 		removeAll();
 		level.setup();
 		while (!level.isEnded()) {
@@ -80,6 +94,9 @@ public class Breakout extends GraphicsProgram {
 		}
 		else if(restartMenu != null){
 			restartMenu.mouseClicked(e);
+		}
+		else if(levelMenu != null){
+			levelMenu.mouseClicked(e);
 		}
 	}
 }

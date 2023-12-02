@@ -17,6 +17,8 @@ public class RestartMenu {
     private String playBtnText;
     private double ySection;
 
+    private boolean isClicked;
+
     public RestartMenu(double width, double height, String labelText, String playBtnText){
         this.width = width;
         this.height = height;
@@ -29,14 +31,19 @@ public class RestartMenu {
         drawLevelMenuBtn();
     }
 
+    public boolean isClicked(){
+        return isClicked;
+    }
+
     public void mouseClicked(MouseEvent e){
         GObject object = program.getElementAt(e.getX(), e.getY());
         if (object != null){
             if(object == restartBtn){
+                isClicked = true;
                 Breakout.setLevelType(Breakout.getLastLevelType());
             }
             else if(object == levelMenuBtn){
-                //TODO
+                Breakout.drawLevelMenu();
             }
         }
     }
