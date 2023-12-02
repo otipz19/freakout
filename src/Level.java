@@ -38,6 +38,9 @@ public abstract class Level implements IScene{
     protected boolean isStarted;
     protected boolean isEnded;
     protected HealthBar healthBar;
+    protected ScoreBoard scoreBoard;
+
+    protected int score;
 
     public Level(int width, int height) {
         this.width = width;
@@ -79,6 +82,11 @@ public abstract class Level implements IScene{
         else
             x = e.getX() - paddleWidth / 2;
         paddle.setLocation(x, paddle.getY());
+    }
+
+    public void addScore(int score){
+        this.score += score;
+        scoreBoard.setScore(this.score);
     }
 
     public void mouseClicked(MouseEvent e){

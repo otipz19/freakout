@@ -2,6 +2,7 @@ import acm.program.GraphicsProgram;
 import java.awt.*;
 
 public class BricksManager {
+    private static final int BRICK_SCORE = 9997778;
     private static BricksManager instance;
     private int bricksCount;
 
@@ -16,7 +17,7 @@ public class BricksManager {
             for(int brickIndex = 0; brickIndex < bricksInRow; brickIndex++){
                 double brickX = x + (brickHorizontalOffset + brickWidth) * brickIndex;
                 double brickY = y + (brickVerticalOffset + brickHeight) * row;
-                Brick brick = new Brick(brickX, brickY, brickWidth, brickHeight, getColor(row));
+                Brick brick = new Brick(brickX, brickY, brickWidth, brickHeight, getColor(row), BRICK_SCORE);
                 Breakout.getInstance().add(brick);
             }
         }
