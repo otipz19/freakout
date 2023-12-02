@@ -4,34 +4,59 @@ import java.awt.event.*;
 
 public class Breakout extends GraphicsProgram {
 /** Width and height of application window in pixels */
-	public static final int APPLICATION_WIDTH = 1000;
-	public static final int APPLICATION_HEIGHT = 900;
+	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 900;
 	private static final int DELTA_TIME = 25;
 
 	private static Breakout instance;
 
 	private static Level level;
 	public static Level getLevel(){ return level;}
-	public static void setLevel(Level lvl){ level = lvl; }
+
+	private boolean isReady;
+	private static int lives;
 
 	public static Breakout getInstance(){
 		return instance;
 	}
 
 	public void init(){
+		isReady = false;
 		instance = this;
 		addMouseListeners();
 	}
 
 	public void run() {
-		level = new FirstLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
-		playLevel(level);
+		while(true) {
+			if (isReady) {
+				level = new FirstLevel(WIDTH, HEIGHT);
+				playLevel(level);
+				isReady = false;
+				break;
+			}
+		}
+		while(true) {
+			if (isReady) {
+				level = new SecondLevel(WIDTH, HEIGHT);
+				playLevel(level);
+				isReady = false;
+				break;
+			}
+		}
+		while(true) {
+			if (isReady) {
+				level = new ThirdLevel(WIDTH, HEIGHT);
+				playLevel(level);
+				isReady = false;
+				break;
+			}
+		}
+
 	}
 
 	public void playLevel(Level level){
 		level.setup();
-		while (level != null) {
-			level.update();
+		while (level.update() == true) {
 			pause(DELTA_TIME);
 		}
 	}
@@ -45,5 +70,6 @@ public class Breakout extends GraphicsProgram {
 		if(level != null && level.isStarted() && !level.isEnded()){
 			level.mouseClicked(e);
 		}
+		isReady = true;
 	}
 }

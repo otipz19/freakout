@@ -39,6 +39,7 @@ public abstract class Level {
     protected int lives;
     protected boolean isStarted;
     protected boolean isEnded;
+    protected boolean haveWon;
 
     public Level(int width, int height) {
         this.width = width;
@@ -49,12 +50,14 @@ public abstract class Level {
         isStarted = true;
     }
 
-    public abstract void update();
+    public abstract boolean update();
 
     public void end(){
         program.removeAll();
-        Breakout.setLevel(null);
+        result();
     }
+
+    public abstract void result();
 
     public boolean isStarted() {
         return isStarted;
@@ -63,6 +66,11 @@ public abstract class Level {
     public boolean isEnded() {
         isEnded = isEnded || !bricksManager.anyBricksPresent() || lives <= 0;
         return isEnded;
+    }
+
+    public boolean haveWon(){
+        haveWon = haveWon || (isEnded && !bricksManager.anyBricksPresent());
+        return haveWon;
     }
 
     public void decrementLife(){

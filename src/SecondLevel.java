@@ -1,8 +1,7 @@
 import acm.graphics.GLabel;
-import acm.program.GraphicsProgram;
 
-public class FirstLevel extends Level {
-    public FirstLevel(int width, int height){
+public class SecondLevel extends Level {
+    public SecondLevel(int width, int height){
         super(width, height);
         paddleWidth = 200;
         paddleHeight = 50;
@@ -42,14 +41,15 @@ public class FirstLevel extends Level {
     @Override
     public void result() {
         if(haveWon()){
-            GLabel result = new GLabel("VICTORY in level 1!!!!");
+            GLabel result = new GLabel("VICTORY in level 2!!!!");
             result.setFont("-36");
             program.add(result, Breakout.WIDTH/3, Breakout.HEIGHT/3);
         } else {
-            GLabel result = new GLabel("LOOOOOSE in level 1!!!!");
+            GLabel result = new GLabel("LOOOOOSE in level 2!!!!");
             result.setFont("-36");
             program.add(result, Breakout.WIDTH/3, Breakout.HEIGHT/3);
         }
     }
 
 }
+
