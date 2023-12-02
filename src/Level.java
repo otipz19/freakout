@@ -15,19 +15,19 @@ public abstract class Level implements IScene{
     protected int bricksRows;
 
     /** Separation between bricks */
-    protected int bricksGap;
+    protected double bricksGap;
 
     /** Height of a brick */
-    protected int brickHeight;
+    protected double brickHeight;
 
     /** Radius of the ball in pixels */
-    protected int ballRadius;
+    protected double ballRadius;
 
     /** Offset of the top brick row from the top */
-    protected int brickYOffset;
-    protected int brickWidth;
-    protected int width;
-    protected int height;
+    protected double brickYOffset;
+    protected double brickWidth;
+    protected double width;
+    protected double height;
 
     protected Paddle paddle;
     protected BreakerBall ball;
@@ -37,6 +37,7 @@ public abstract class Level implements IScene{
     protected int lives;
     protected boolean isStarted;
     protected boolean isEnded;
+    protected HealthBar healthBar;
 
     public Level(int width, int height) {
         this.width = width;
@@ -66,6 +67,7 @@ public abstract class Level implements IScene{
 
     public void decrementLife(){
         lives--;
+        healthBar.decrementLife();
     }
 
     public void mouseMoved(MouseEvent e) {

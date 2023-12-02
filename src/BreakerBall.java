@@ -23,7 +23,7 @@ public class BreakerBall extends GCompound {
     /**
      * Full constructor.(AccelerationX,AccelerationY,VelocityX,VelocityY,PosX,PosY,Width,Height
      */
-    BreakerBall(float Ax, float Ay, float Vx, float Vy, float Px, float Py, float W, float H) {
+    BreakerBall(double Ax, double Ay, double Vx, double Vy, double Px, double Py, double W, double H) {
         AccelerationX = Ax;
         AccelerationY = Ay;
         VelocityX = Vx;
@@ -39,7 +39,7 @@ public class BreakerBall extends GCompound {
     /**
      * Basic constructor.(VelocityX,VelocityY,PosX,PosY,Width,Height
      */
-    BreakerBall(float Vx, float Vy, float Px, float Py, float W, float H) {
+    BreakerBall(double Vx, double Vy, double Px, double Py, double W, double H) {
         VelocityX = Vx;
         VelocityY = Vy;
         PositionX = Px;
