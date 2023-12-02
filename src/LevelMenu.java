@@ -4,7 +4,7 @@ import acm.program.GraphicsProgram;
 import java.awt.event.MouseEvent;
 
 public class LevelMenu implements IScene{
-    private static final String font = "comicsans-24";
+    private static final String FONT = "comicsans-";
 
     private final GraphicsProgram program = Breakout.getInstance();
 
@@ -72,7 +72,7 @@ public class LevelMenu implements IScene{
         double x = xSection * 3;
         double width = xSection * 4;
         double height = ySection * 2;
-        Button btn = new Button(x, y, width, height, text, font);
+        Button btn = new Button(x, y, width, height, text, FONT);
         program.add(btn);
         return btn;
     }

@@ -5,7 +5,7 @@ import acm.program.GraphicsProgram;
 import java.awt.event.MouseEvent;
 
 public class RestartMenu implements IScene{
-    private static final String font = "comicsans-24";
+    private static final String FONT = "comicsans-";
     private final GraphicsProgram program = Breakout.getInstance();
     private GLabel resultLabel;
     private Button restartBtn;
@@ -16,6 +16,7 @@ public class RestartMenu implements IScene{
     private String labelText;
     private String playBtnText;
     private double ySection;
+    private double xSection;
 
     private boolean isClicked;
 
@@ -25,6 +26,7 @@ public class RestartMenu implements IScene{
         this.labelText = labelText;
         this.playBtnText = playBtnText;
         this.ySection = height / 16;
+        this.xSection = width / 10;
     }
 
     @Override
@@ -70,11 +72,11 @@ public class RestartMenu implements IScene{
     }
 
     private void drawResultLabel(){
-        resultLabel = new GLabel(labelText);
-        resultLabel.setFont(font);
-        double x = (width - resultLabel.getWidth()) / 2;
+        double width = xSection * 4;
+        double height = ySection * 2;
+        double x = (this.width - width) / 2;
         double y = ySection * 3;
-        resultLabel.setLocation(x, y);
+        resultLabel = new SmartLabel(x, y, width, height, labelText, FONT);
         program.add(resultLabel);
     }
 
@@ -83,7 +85,7 @@ public class RestartMenu implements IScene{
         double height = ySection * 2;
         double x = this.width / 2 + width / 2;
         double y = ySection * 8;
-        levelMenuBtn = new Button(x, y, width, height, "Levels", font);
+        levelMenuBtn = new Button(x, y, width, height, "Levels", FONT);
         program.add(levelMenuBtn);
     }
 
@@ -92,7 +94,7 @@ public class RestartMenu implements IScene{
         double height = ySection * 2;
         double x = this.width / 2 - 3 * width / 2;
         double y = ySection * 8;
-        restartBtn = new Button(x, y, width, height, playBtnText, font);
+        restartBtn = new Button(x, y, width, height, playBtnText, FONT);
         program.add(restartBtn);
     }
 }
