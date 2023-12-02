@@ -11,10 +11,12 @@ public class ScoreBoard extends GCompound {
         this.width = width;
         this.height = height;
         label = new SmartLabel(0, 0, width, height, "0", FONT);
+        setScore(0);
         add(label);
     }
 
-    public void setScore(int score){
+    public void setScore(int score) {
         label.setLabel(Integer.toString(score));
+        label.setLocation(width - label.getWidth(), label.getY());
     }
 }

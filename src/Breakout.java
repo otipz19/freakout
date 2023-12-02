@@ -21,6 +21,16 @@ public class Breakout extends GraphicsProgram {
 
 	private static IScene scene;
 
+	private static GameResult lastGameResult;
+	private static GameResult bestGameResult;
+
+	public static void setLastGameResult(GameResult lastGameResult) {
+		Breakout.lastGameResult = lastGameResult;
+		if(bestGameResult == null || bestGameResult.getScore() < lastGameResult.getScore()){
+			bestGameResult = lastGameResult;
+		}
+	}
+
 	public static Breakout getInstance(){
 		return instance;
 	}
@@ -44,7 +54,8 @@ public class Breakout extends GraphicsProgram {
 				scene = new LevelMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT);
 				break;
 			case RESTART_MENU:
-				scene = new RestartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT, "Breakout", "Restart");
+				String label = lastGameResult.isWon() ? "YOU WON!" : "YOU LOST...";
+				scene = new RestartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT, label);
 				break;
 			case FIRST_LEVEL:
 				scene = new FirstLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);

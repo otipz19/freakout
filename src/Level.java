@@ -68,9 +68,16 @@ public abstract class Level implements IScene{
         return isEnded;
     }
 
+    public boolean isWon(){
+        return isEnded && !bricksManager.anyBricksPresent();
+    }
+
     public void decrementLife(){
         lives--;
         healthBar.decrementLife();
+        if(lives <= 0){
+            end();
+        }
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -94,6 +101,7 @@ public abstract class Level implements IScene{
     }
 
     protected void end(){
+        Breakout.setLastGameResult(new GameResult(isWon(), score));
         Breakout.setActiveScene(SceneType.RESTART_MENU);
     }
 }

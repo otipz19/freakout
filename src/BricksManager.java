@@ -2,7 +2,7 @@ import acm.program.GraphicsProgram;
 import java.awt.*;
 
 public class BricksManager {
-    private static final int BRICK_SCORE = 9997778;
+    private static final int BRICK_SCORE = 5;
     private static BricksManager instance;
     private int bricksCount;
 

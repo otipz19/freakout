@@ -6,8 +6,8 @@ public class FirstLevel extends Level {
         paddleWidth = 200;
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
-        bricksPerRow = 10;
-        bricksRows = 5;
+        bricksPerRow = 2;
+        bricksRows = 1;
         bricksGap = 4;
         brickHeight = 10;
         ballRadius = 10;

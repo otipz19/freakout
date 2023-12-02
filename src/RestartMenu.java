@@ -6,25 +6,23 @@ import java.awt.event.MouseEvent;
 
 public class RestartMenu implements IScene{
     private static final String FONT = "comicsans-";
+    private static final String LEVEL_MENU_BTN_LABEL = "Levels";
+    public static final String RESTART_BTN_LABEL = "Restart";
     private final GraphicsProgram program = Breakout.getInstance();
     private GLabel resultLabel;
     private Button restartBtn;
     private Button levelMenuBtn;
 
     private double width;
-    private double height;
     private String labelText;
-    private String playBtnText;
     private double ySection;
     private double xSection;
 
     private boolean isClicked;
 
-    public RestartMenu(double width, double height, String labelText, String playBtnText){
+    public RestartMenu(double width, double height, String labelText){
         this.width = width;
-        this.height = height;
         this.labelText = labelText;
-        this.playBtnText = playBtnText;
         this.ySection = height / 16;
         this.xSection = width / 10;
     }
@@ -85,7 +83,7 @@ public class RestartMenu implements IScene{
         double height = ySection * 2;
         double x = this.width / 2 + width / 2;
         double y = ySection * 8;
-        levelMenuBtn = new Button(x, y, width, height, "Levels", FONT);
+        levelMenuBtn = new Button(x, y, width, height, LEVEL_MENU_BTN_LABEL, FONT);
         program.add(levelMenuBtn);
     }
 
@@ -94,7 +92,7 @@ public class RestartMenu implements IScene{
         double height = ySection * 2;
         double x = this.width / 2 - 3 * width / 2;
         double y = ySection * 8;
-        restartBtn = new Button(x, y, width, height, playBtnText, FONT);
+        restartBtn = new Button(x, y, width, height, RESTART_BTN_LABEL, FONT);
         program.add(restartBtn);
     }
 }
