@@ -50,6 +50,9 @@ public class Breakout extends GraphicsProgram {
 
 	public static void setActiveScene(SceneType sceneType){
 		switch (sceneType){
+			case START_MENU:
+				scene = new StartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				break;
 			case LEVEL_MENU:
 				scene = new LevelMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT);
 				break;
@@ -76,7 +79,7 @@ public class Breakout extends GraphicsProgram {
 	}
 
 	public void run() {
-		setActiveScene(SceneType.LEVEL_MENU);
+		setActiveScene(SceneType.START_MENU);
 		while(true){
 			playScene();
 		}

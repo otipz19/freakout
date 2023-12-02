@@ -1,4 +1,5 @@
 public enum SceneType {
+    START_MENU,
     LEVEL_MENU,
     RESTART_MENU,
     FIRST_LEVEL,

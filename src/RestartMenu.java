@@ -4,27 +4,17 @@ import acm.program.GraphicsProgram;
 
 import java.awt.event.MouseEvent;
 
-public class RestartMenu implements IScene{
-    private static final String FONT = "comicsans-";
+public class RestartMenu extends BaseMenu {
     private static final String LEVEL_MENU_BTN_LABEL = "Levels";
     public static final String RESTART_BTN_LABEL = "Restart";
-    private final GraphicsProgram program = Breakout.getInstance();
     private GLabel resultLabel;
     private Button restartBtn;
     private Button levelMenuBtn;
-
-    private double width;
-    private String labelText;
-    private double ySection;
-    private double xSection;
-
-    private boolean isClicked;
+    private final String labelText;
 
     public RestartMenu(double width, double height, String labelText){
-        this.width = width;
+        super(width, height);
         this.labelText = labelText;
-        this.ySection = height / 16;
-        this.xSection = width / 10;
     }
 
     @Override
@@ -36,18 +26,8 @@ public class RestartMenu implements IScene{
     }
 
     @Override
-    public void update() {
-
-    }
-
-    @Override
     public boolean isStarted() {
         return restartBtn != null && levelMenuBtn != null && resultLabel != null;
-    }
-
-    @Override
-    public boolean isEnded() {
-        return isClicked;
     }
 
     public void mouseClicked(MouseEvent e){
@@ -62,11 +42,6 @@ public class RestartMenu implements IScene{
                 Breakout.setActiveScene(SceneType.LEVEL_MENU);
             }
         }
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
     }
 
     private void drawResultLabel(){
