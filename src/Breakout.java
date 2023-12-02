@@ -17,14 +17,14 @@ public class Breakout extends GraphicsProgram {
 	}
 
 	private static RestartMenu restartMenu;
-	private static LevelType lastLevel = LevelType.FIRST;
+	private static LevelType lastLevelType = LevelType.FIRST;
 
 	public static Level getLevel(){
 		return level;
 	}
 
-	public static LevelType getLastLevel(){
-		return lastLevel;
+	public static LevelType getLastLevelType(){
+		return lastLevelType;
 	}
 
 	public static void setLevelType(LevelType levelType){
@@ -39,7 +39,7 @@ public class Breakout extends GraphicsProgram {
 				//TODO
 				break;
 		}
-		lastLevel = levelType;
+		lastLevelType = levelType;
 	}
 
 	public void init(){
@@ -53,7 +53,10 @@ public class Breakout extends GraphicsProgram {
 			while(level == null){
 				waitForClick();
 			}
-			playLevel(level);
+			while (true){
+				setLevelType(lastLevelType);
+				playLevel(level);
+			}
 		}
 	}
 

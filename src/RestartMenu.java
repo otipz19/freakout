@@ -33,7 +33,7 @@ public class RestartMenu {
         GObject object = program.getElementAt(e.getX(), e.getY());
         if (object != null){
             if(object == restartBtn){
-                Breakout.setLevelType(Breakout.getLastLevel());
+                Breakout.setLevelType(Breakout.getLastLevelType());
             }
             else if(object == levelMenuBtn){
                 //TODO
