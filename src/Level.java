@@ -1,5 +1,3 @@
-import acm.program.GraphicsProgram;
-
 import java.awt.event.MouseEvent;
 
 public abstract class Level {
@@ -53,7 +51,7 @@ public abstract class Level {
 
     public void end(){
         program.removeAll();
-        Breakout.setLevel(null);
+        Breakout.setLevelType(null);
     }
 
     public boolean isStarted() {
