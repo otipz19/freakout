@@ -19,6 +19,6 @@ public class Brick extends GCompound {
     public void onCollision() {
         Breakout.getLevel().addScore(score);
         BricksManager.getInstance().brickDestroyed();
-        Breakout.getInstance().remove(this);
+        Breakout.removeObject(this);
     }
 }

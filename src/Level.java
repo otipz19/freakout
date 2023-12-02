@@ -1,3 +1,5 @@
+import acm.graphics.GObject;
+
 import java.awt.event.MouseEvent;
 
 public abstract class Level implements IScene{
@@ -33,7 +35,6 @@ public abstract class Level implements IScene{
     protected BreakerBall ball;
     protected BricksManager bricksManager;
     protected BoxContainer container;
-    protected Breakout program = Breakout.getInstance();
     protected int lives;
     protected boolean isStarted;
     protected boolean isEnded;
@@ -96,7 +97,7 @@ public abstract class Level implements IScene{
         scoreBoard.setScore(this.score);
     }
 
-    public void mouseClicked(MouseEvent e){
+    public void mouseClicked(GObject object){
         ball.setActive(true);
     }
 

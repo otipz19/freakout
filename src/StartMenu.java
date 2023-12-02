@@ -1,7 +1,4 @@
 import acm.graphics.*;
-import acm.program.GraphicsProgram;
-
-import java.awt.event.MouseEvent;
 
 public class StartMenu extends BaseMenu{
     private SmartLabel title;
@@ -15,11 +12,11 @@ public class StartMenu extends BaseMenu{
     @Override
     public void setup() {
         title = new SmartLabel(xSection * 3, ySection * 3, xSection * 4, ySection * 2, "BREAKOUT", FONT);
-        program.add(title);
+        Breakout.addObject(title);
         playBtn = new Button(xSection * 3, ySection * 7, xSection * 4, ySection * 2, "Play", FONT);
-        program.add(playBtn);
+        Breakout.addObject(playBtn);
         authors = new SmartLabel(xSection * 2, ySection * 13, xSection * 6, ySection * 2, "Made by Alex, Orest and Max", FONT);
-        program.add(authors);
+        Breakout.addObject(authors);
     }
 
     @Override
@@ -28,9 +25,8 @@ public class StartMenu extends BaseMenu{
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        GObject object = program.getElementAt(e.getX(), e.getY());
-        if(object != null && object == playBtn){
+    public void mouseClicked(GObject object) {
+        if(object == playBtn){
             isClicked = true;
             Breakout.setActiveScene(SceneType.LEVEL_MENU);
         }

@@ -24,10 +24,11 @@ public class FirstLevel extends Level {
         container = new BoxContainer(0, height / 10, width, height);
         ball = new BreakerBall(10, 10, 200, 200, ballRadius * 2, ballRadius * 2);
         paddle = new Paddle(paddleWidth, paddleHeight);
-        program.add(ball);
-        program.add(paddle, (width - paddleWidth) / 2, height - paddleYOffset);
-        program.add(healthBar);
-        program.add(scoreBoard);
+        paddle.setLocation( (width - paddleWidth) / 2, height - paddleYOffset);
+        Breakout.addObject(ball);
+        Breakout.addObject(paddle);
+        Breakout.addObject(healthBar);
+        Breakout.addObject(scoreBoard);
         super.setup();
     }
 

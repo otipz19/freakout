@@ -7,6 +7,7 @@
  * This file will eventually implement the game of Breakout.
  */
 
+import acm.graphics.GObject;
 import acm.program.*;
 
 import java.awt.event.*;
@@ -23,6 +24,7 @@ public class Breakout extends GraphicsProgram {
 
 	private static GameResult lastGameResult;
 	private static GameResult bestGameResult;
+	private static SceneType lastLevelType = SceneType.FIRST_LEVEL;
 
 	public static void setLastGameResult(GameResult lastGameResult) {
 		Breakout.lastGameResult = lastGameResult;
@@ -30,12 +32,6 @@ public class Breakout extends GraphicsProgram {
 			bestGameResult = lastGameResult;
 		}
 	}
-
-	public static Breakout getInstance(){
-		return instance;
-	}
-
-	private static SceneType lastLevelType = SceneType.FIRST_LEVEL;
 
 	public static Level getLevel(){
 		if(scene instanceof Level){
@@ -46,6 +42,22 @@ public class Breakout extends GraphicsProgram {
 
 	public static SceneType getLastLevelType(){
 		return lastLevelType;
+	}
+
+	public static void addObject(GObject object){
+		instance.add(object);
+	}
+
+	public static void clearCanvas(){
+		instance.removeAll();
+	}
+
+	public static GObject getObjectAt(double x, double y){
+		return instance.getElementAt(x, y);
+	}
+
+	public static void removeObject(GObject object){
+		instance.remove(object);
 	}
 
 	public static void setActiveScene(SceneType sceneType){
@@ -102,7 +114,10 @@ public class Breakout extends GraphicsProgram {
 	}
 	public void mouseClicked(MouseEvent e){
 		if(scene != null && scene.isStarted() && !scene.isEnded()){
-			scene.mouseClicked(e);
+			GObject object = getElementAt(e.getX(), e.getY());
+			if(object != null){
+				scene.mouseClicked(object);
+			}
 		}
 	}
 }

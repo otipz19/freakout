@@ -18,8 +18,6 @@ public class BreakerBall extends GCompound {
         isActive = opt;
     }
 
-    private Breakout program = Breakout.getInstance();
-
     /**
      * Full constructor.(AccelerationX,AccelerationY,VelocityX,VelocityY,PosX,PosY,Width,Height
      */
@@ -117,7 +115,7 @@ public class BreakerBall extends GCompound {
             double radians = Math.toRadians(angle);
             double xTurned = midX + (startX - midX) * Math.cos(radians) - (startY - midY) * Math.sin(radians);
             double yTurned = midY + (startX - midX) * Math.sin(radians) + (startY - midY) * Math.cos(radians);
-            GObject object = program.getElementAt(xTurned, yTurned);
+            GObject object = Breakout.getObjectAt(xTurned, yTurned);
             if(object != null && object != this){
                 if(angle == 0 || angle == 180){
                     VelocityX *= -1;

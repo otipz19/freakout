@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 
 public abstract class BaseMenu implements IScene {
     protected static final String FONT = "comicsans-";
-    protected final GraphicsProgram program = Breakout.getInstance();
+
     protected double width;
     protected double height;
     protected double ySection;

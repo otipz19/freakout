@@ -19,7 +19,7 @@ public class RestartMenu extends BaseMenu {
 
     @Override
     public void setup() {
-        program.removeAll();
+        Breakout.clearCanvas();
         drawResultLabel();
         drawRestartBtn();
         drawLevelMenuBtn();
@@ -30,17 +30,14 @@ public class RestartMenu extends BaseMenu {
         return restartBtn != null && levelMenuBtn != null && resultLabel != null;
     }
 
-    public void mouseClicked(MouseEvent e){
-        GObject object = program.getElementAt(e.getX(), e.getY());
-        if (object != null){
-            if(object == restartBtn){
-                isClicked = true;
-                Breakout.setActiveScene(Breakout.getLastLevelType());
-            }
-            else if(object == levelMenuBtn){
-                isClicked = true;
-                Breakout.setActiveScene(SceneType.LEVEL_MENU);
-            }
+    public void mouseClicked(GObject object){
+        if(object == restartBtn){
+            isClicked = true;
+            Breakout.setActiveScene(Breakout.getLastLevelType());
+        }
+        else if(object == levelMenuBtn){
+            isClicked = true;
+            Breakout.setActiveScene(SceneType.LEVEL_MENU);
         }
     }
 
@@ -50,7 +47,7 @@ public class RestartMenu extends BaseMenu {
         double x = (this.width - width) / 2;
         double y = ySection * 3;
         resultLabel = new SmartLabel(x, y, width, height, labelText, FONT);
-        program.add(resultLabel);
+        Breakout.addObject(resultLabel);
     }
 
     private void drawLevelMenuBtn() {
@@ -59,7 +56,7 @@ public class RestartMenu extends BaseMenu {
         double x = this.width / 2 + width / 2;
         double y = ySection * 8;
         levelMenuBtn = new Button(x, y, width, height, LEVEL_MENU_BTN_LABEL, FONT);
-        program.add(levelMenuBtn);
+        Breakout.addObject(levelMenuBtn);
     }
 
     private void drawRestartBtn() {
@@ -68,6 +65,6 @@ public class RestartMenu extends BaseMenu {
         double x = this.width / 2 - 3 * width / 2;
         double y = ySection * 8;
         restartBtn = new Button(x, y, width, height, RESTART_BTN_LABEL, FONT);
-        program.add(restartBtn);
+        Breakout.addObject(restartBtn);
     }
 }
