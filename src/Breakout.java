@@ -10,37 +10,44 @@ public class Breakout extends GraphicsProgram {
 
 	private static Breakout instance;
 
-	private static Level level;
+	private static IScene scene;
 
 	public static Breakout getInstance(){
 		return instance;
 	}
 
-	private static RestartMenu restartMenu;
-	private static LevelMenu levelMenu;
-	private static LevelType lastLevelType = LevelType.FIRST;
+	private static SceneType lastLevelType = SceneType.FIRST_LEVEL;
 
 	public static Level getLevel(){
-		return level;
+		if(scene instanceof Level){
+			return (Level) scene;
+		}
+		return null;
 	}
 
-	public static LevelType getLastLevelType(){
+	public static SceneType getLastLevelType(){
 		return lastLevelType;
 	}
 
-	public static void setLevelType(LevelType levelType){
-		switch (levelType){
-			case FIRST:
-				level = new FirstLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+	public static void setActiveScene(SceneType sceneType){
+		switch (sceneType){
+			case LEVEL_MENU:
+				scene = new LevelMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT);
 				break;
-			case SECOND:
+			case RESTART_MENU:
+				scene = new RestartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT, "Breakout", "Restart");
+				break;
+			case FIRST_LEVEL:
+				scene = new FirstLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				lastLevelType = sceneType;
+				break;
+			case SECOND_LEVEL:
 				//TODO
 				break;
-			case THIRD:
+			case THIRD_LEVEL:
 				//TODO
 				break;
 		}
-		lastLevelType = levelType;
 	}
 
 	public void init(){
@@ -49,54 +56,30 @@ public class Breakout extends GraphicsProgram {
 	}
 
 	public void run() {
-		drawLevelMenu();
-		while(!levelMenu.isClicked()){
-			pause(100);
-		}
+		setActiveScene(SceneType.LEVEL_MENU);
 		while(true){
-			if(level != null){
-				playLevel(level);
-				drawRestartMenu();
-				while(!restartMenu.isClicked()){
-					pause(100);
-				}
-			}
+			playScene();
 		}
 	}
 
-	private void drawRestartMenu() {
+	private void playScene(){
 		removeAll();
-		restartMenu = new RestartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT, "Breakout", "Restart");
-	}
-
-	public static void drawLevelMenu() {
-		instance.removeAll();
-		levelMenu = new LevelMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT);
-	}
-
-	private void playLevel(Level level){
-		removeAll();
-		level.setup();
-		while (!level.isEnded()) {
-			level.update();
+		IScene scene = this.scene;
+		scene.setup();
+		while (!scene.isEnded()) {
+			scene.update();
 			pause(DELTA_TIME);
 		}
 	}
 
 	public void mouseMoved(MouseEvent e){
-		if(level != null && level.isStarted() && !level.isEnded()){
-			level.mouseMoved(e);
+		if(scene != null && scene.isStarted() && !scene.isEnded()){
+			scene.mouseMoved(e);
 		}
 	}
 	public void mouseClicked(MouseEvent e){
-		if(level != null && level.isStarted() && !level.isEnded()){
-			level.mouseClicked(e);
-		}
-		else if(restartMenu != null){
-			restartMenu.mouseClicked(e);
-		}
-		else if(levelMenu != null){
-			levelMenu.mouseClicked(e);
+		if(scene != null && scene.isStarted() && !scene.isEnded()){
+			scene.mouseClicked(e);
 		}
 	}
 }

@@ -29,15 +29,11 @@ public class FirstLevel extends Level {
 
     @Override
     public void update(){
-        if(isEnded()){
-            end();
-        } else {
+        if(isStarted && !isEnded()){
             ball.update();
         }
-    }
-
-    @Override
-    public void end() {
-        super.end();
+        else if(isStarted && isEnded){
+            end();
+        }
     }
 }

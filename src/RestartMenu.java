@@ -4,7 +4,7 @@ import acm.program.GraphicsProgram;
 
 import java.awt.event.MouseEvent;
 
-public class RestartMenu {
+public class RestartMenu implements IScene{
     private static final String font = "comicsans-24";
     private final GraphicsProgram program = Breakout.getInstance();
     private GLabel resultLabel;
@@ -25,13 +25,28 @@ public class RestartMenu {
         this.labelText = labelText;
         this.playBtnText = playBtnText;
         this.ySection = height / 16;
+    }
+
+    @Override
+    public void setup() {
         program.removeAll();
         drawResultLabel();
         drawRestartBtn();
         drawLevelMenuBtn();
     }
 
-    public boolean isClicked(){
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public boolean isStarted() {
+        return restartBtn != null && levelMenuBtn != null && resultLabel != null;
+    }
+
+    @Override
+    public boolean isEnded() {
         return isClicked;
     }
 
@@ -40,12 +55,18 @@ public class RestartMenu {
         if (object != null){
             if(object == restartBtn){
                 isClicked = true;
-                Breakout.setLevelType(Breakout.getLastLevelType());
+                Breakout.setActiveScene(Breakout.getLastLevelType());
             }
             else if(object == levelMenuBtn){
-                Breakout.drawLevelMenu();
+                isClicked = true;
+                Breakout.setActiveScene(SceneType.LEVEL_MENU);
             }
         }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 
     private void drawResultLabel(){

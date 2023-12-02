@@ -1,6 +1,6 @@
 import java.awt.event.MouseEvent;
 
-public abstract class Level {
+public abstract class Level implements IScene{
     /** Dimensions of the paddle */
     protected double paddleWidth;
     protected double paddleHeight;
@@ -49,17 +49,18 @@ public abstract class Level {
 
     public abstract void update();
 
-    public void end(){
-        program.removeAll();
-        Breakout.setLevelType(null);
-    }
-
     public boolean isStarted() {
         return isStarted;
     }
 
     public boolean isEnded() {
+        if(bricksManager == null){
+            return false;
+        }
         isEnded = isEnded || !bricksManager.anyBricksPresent() || lives <= 0;
+        if(isEnded){
+            end();
+        }
         return isEnded;
     }
 
@@ -80,5 +81,9 @@ public abstract class Level {
 
     public void mouseClicked(MouseEvent e){
         ball.setActive(true);
+    }
+
+    protected void end(){
+        Breakout.setActiveScene(SceneType.RESTART_MENU);
     }
 }

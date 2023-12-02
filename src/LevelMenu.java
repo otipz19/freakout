@@ -3,7 +3,7 @@ import acm.program.GraphicsProgram;
 
 import java.awt.event.MouseEvent;
 
-public class LevelMenu {
+public class LevelMenu implements IScene{
     private static final String font = "comicsans-24";
 
     private final GraphicsProgram program = Breakout.getInstance();
@@ -20,12 +20,28 @@ public class LevelMenu {
     public LevelMenu(double width, double height){
         xSection = width / 10;
         ySection = height / 16;
+    }
+
+    @Override
+    public void setup() {
+        program.removeAll();
         firstBtn = drawBtn(ySection * 3, "First level");
         secondBtn = drawBtn(ySection * 7, "Second level");
         thirdBtn = drawBtn(ySection * 11, "Third level");
     }
 
-    public boolean isClicked(){
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public boolean isStarted() {
+        return firstBtn != null && secondBtn != null && thirdBtn != null;
+    }
+
+    @Override
+    public boolean isEnded() {
         return isClicked;
     }
 
@@ -33,18 +49,23 @@ public class LevelMenu {
         GObject object = program.getElementAt(e.getX(), e.getY());
         if(object != null){
             if(object == firstBtn){
-                Breakout.setLevelType(LevelType.FIRST);
                 isClicked = true;
+                Breakout.setActiveScene(SceneType.FIRST_LEVEL);
             }
             else if(object == secondBtn){
-                Breakout.setLevelType(LevelType.SECOND);
                 isClicked = true;
+                Breakout.setActiveScene(SceneType.SECOND_LEVEL);
             }
             else if(object == thirdBtn){
-                Breakout.setLevelType(LevelType.THIRD);
                 isClicked = true;
+                Breakout.setActiveScene(SceneType.THIRD_LEVEL);
             }
         }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 
     private Button drawBtn(double y, String text){
