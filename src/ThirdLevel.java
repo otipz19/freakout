@@ -24,7 +24,7 @@ public class ThirdLevel extends Level {
         healthBar = new HealthBar(0, 0, width / 4, height / 10, lives);
         scoreBoard = new ScoreBoard(3 * width / 4, 0, width / 4, height / 10);
         container = new BoxContainer(0, height / 10, width, height);
-        ball = new BreakerBall(3, 200, 200, ballRadius * 2, ballRadius * 2);
+        ball = new BreakerBall(7, 200, 200, ballRadius * 2, ballRadius * 2);
         paddle = new Paddle((width - paddleWidth) / 2, height - paddleYOffset, paddleWidth, paddleHeight, palette.getPaddle());
         Breakout.addObject(ball);
         Breakout.addObject(paddle);

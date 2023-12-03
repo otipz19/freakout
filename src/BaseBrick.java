@@ -10,6 +10,8 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
     protected static final int SIMPLE_BRICK_LIVES = 1;
     protected static final int REINFORCED_BRICK_SCORE = 20;
     protected static final int REINFORCED_BRICK_LIVES = 2;
+    protected static final int ULTRA_BRICK_SCORE = 50;
+    protected static final int ULTRA_BRICK_LIVES = 1;
 
     private final int score;
     protected int lives;
