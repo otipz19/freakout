@@ -6,13 +6,13 @@ public class BricksManager {
     private static final RandomGenerator rng = RandomGenerator.getInstance();
     public static final double HORIZ_OFF = 4;
     public static final double VERT_OFF = 4;
-    private static final double brickHeight = 20;
+    public static final double brickHeight = 20;
 
     private static BricksManager instance;
 
     private final double x;
     private final double y;
-    private final double width;
+    public final double width;
 
     private double brickWidth;
     private int rows = 2;

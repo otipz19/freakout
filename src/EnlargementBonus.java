@@ -64,7 +64,7 @@ public class EnlargementBonus extends Bonus{
     void use() {
         Paddle P = Paddle.getInstance();
         RandomGenerator r = new RandomGenerator();
-        P.scale(r.nextDouble(0.9,1.1),1);
+        P.scale(r.nextDouble(1,1.1),1);
     }
     @Override
     void checkIfOutOfBounds() {
