@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public abstract class ColorPallete {
+public abstract class ColorPalette {
     protected Color background;
     protected Color paddle;
     protected Color ball;

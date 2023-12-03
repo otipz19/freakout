@@ -97,7 +97,7 @@ public class BreakerBall extends GCompound implements ICollidable{
 
     private void construct() {
         GOval ov = new GOval(0, 0, Width, Height);
-        ColorPallete pallete = Breakout.getLevel().getPallete();
+        ColorPalette pallete = Breakout.getLevel().getPalette();
         ov.setColor(pallete.getBall());
         ov.setFillColor(pallete.getBall());
         ov.setFilled(true);

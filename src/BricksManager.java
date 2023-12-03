@@ -15,7 +15,7 @@ public class BricksManager {
             for(int brickIndex = 0; brickIndex < bricksInRow; brickIndex++){
                 double brickX = x + (brickHorizontalOffset + brickWidth) * brickIndex;
                 double brickY = y + (brickVerticalOffset + brickHeight) * row;
-                SimpleBrick brick = new SimpleBrick(brickX, brickY, brickWidth, brickHeight, Breakout.getLevel().getPallete().getBrickColor(row));
+                SimpleBrick brick = new SimpleBrick(brickX, brickY, brickWidth, brickHeight, Breakout.getLevel().getPalette().getBrickColor(row));
                 Breakout.addObject(brick);
             }
         }

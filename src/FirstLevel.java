@@ -12,7 +12,7 @@ public class FirstLevel extends Level {
         brickYOffset = 70;
         lives = 3;
         brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
-        pallete = new FirstPallete();
+        palette = new FirstPalette();
     }
 
     @Override
@@ -23,7 +23,7 @@ public class FirstLevel extends Level {
         scoreBoard = new ScoreBoard(3 * width / 4, 0, width / 4, height / 10);
         container = new BoxContainer(0, height / 10, width, height);
         ball = new BreakerBall(10, 10, 200, 200, ballRadius * 2, ballRadius * 2);
-        paddle = new Paddle((width - paddleWidth) / 2, height - paddleYOffset, paddleWidth, paddleHeight, pallete.getPaddle());
+        paddle = new Paddle((width - paddleWidth) / 2, height - paddleYOffset, paddleWidth, paddleHeight, palette.getPaddle());
         Breakout.addObject(ball);
         Breakout.addObject(paddle);
         Breakout.addObject(healthBar);

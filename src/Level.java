@@ -40,7 +40,7 @@ public abstract class Level implements IScene{
     protected boolean isEnded;
     protected HealthBar healthBar;
     protected ScoreBoard scoreBoard;
-    protected ColorPallete pallete;
+    protected ColorPalette palette;
     protected int score;
 
     private GRect background;
@@ -56,8 +56,8 @@ public abstract class Level implements IScene{
 
     public abstract void update();
 
-    public ColorPallete getPallete(){
-        return pallete;
+    public ColorPalette getPalette(){
+        return palette;
     }
 
     public boolean isStarted() {
@@ -114,8 +114,8 @@ public abstract class Level implements IScene{
 
     protected void drawBackground(){
         background = new GRect(0, 0, width, height);
-        background.setColor(pallete.getBackground());
-        background.setFillColor(pallete.getBackground());
+        background.setColor(palette.getBackground());
+        background.setFillColor(palette.getBackground());
         background.setFilled(true);
         Breakout.addObject(background);
     }
