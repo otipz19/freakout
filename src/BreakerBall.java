@@ -59,6 +59,11 @@ public class BreakerBall extends GCompound implements ICollidable{
             collideWithContainer();
             checkCollisionsWithObjects();
             move(VelocityX, VelocityY);
+        }else{
+            Paddle P = Paddle.getPaddle();
+            PositionX = P.getX()+P.getWidth()/2-Width/2;
+            PositionY = P.getY()-Height-5;
+            setLocation(P.getX()+P.getWidth()/2-Width/2,P.getY()-Height-5);
         }
     }
 
@@ -84,6 +89,8 @@ public class BreakerBall extends GCompound implements ICollidable{
         } else {
             VelocityX *= ReflectVec.getX();
             VelocityY *= ReflectVec.getY();
+            //PositionX = Math.max(Math.min(PositionX,BoxContainer.getContainer().getRightX()-Width/2),BoxContainer.getContainer().getLeftX()+Width/2);
+            //PositionX = Math.max(Math.min(PositionX,BoxContainer.getContainer().getBottomY()-Height/2),BoxContainer.getContainer().getTopY()+Height/2);
         }
     }
 
@@ -112,7 +119,7 @@ public class BreakerBall extends GCompound implements ICollidable{
         double startY = getY() + Height / 2;
         double midX = getX() + Width / 2;
         double midY = getY() + Height / 2;
-        for(double angle = 0; angle <= 360; angle += 45){
+        for(double angle = 0; angle <= 360; angle += 10){
             double radians = Math.toRadians(angle);
             double xTurned = midX + (startX - midX) * Math.cos(radians) - (startY - midY) * Math.sin(radians);
             double yTurned = midY + (startX - midX) * Math.sin(radians) + (startY - midY) * Math.cos(radians);
