@@ -40,6 +40,7 @@ public class SpeedBonus extends Bonus{
             move();
             collideWithActivator();
             move(VelocityX, VelocityY);
+            checkIfOutOfBounds();
         }
     }
     @Override
@@ -70,7 +71,7 @@ public class SpeedBonus extends Bonus{
     @Override
     void checkIfOutOfBounds() {
         if(PositionY>Breakout.getLevel().height){
-            Breakout.removeObject(this);
+            Breakout.removeObject(Breakout.getLevel().firstSpeedBonus);
             Breakout.getLevel().firstSpeedBonus=null;
         }
     }
