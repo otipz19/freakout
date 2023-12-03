@@ -18,6 +18,7 @@ public class SecondLevel extends Level {
         bricksManager.addReinforcedBricks(20);
         shouldSpawnEnlargementBonus = true;
         shouldSpawnSpeedBonus = false;
+        ballSpeed = 10;
     }
 
     @Override

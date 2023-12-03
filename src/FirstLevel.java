@@ -4,7 +4,7 @@ import acm.program.GraphicsProgram;
 public class FirstLevel extends Level {
     public FirstLevel(int width, int height) {
         super(width, height);
-        paddleWidth = 100;
+        paddleWidth = 200;
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
         bricksPerRow = 10;
@@ -18,6 +18,7 @@ public class FirstLevel extends Level {
         bricksManager.setBricksInRow(bricksPerRow);
         shouldSpawnEnlargementBonus = false;
         shouldSpawnSpeedBonus = false;
+        ballSpeed = 8;
     }
 
     @Override

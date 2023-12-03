@@ -65,7 +65,7 @@ public class SpeedBonus extends Bonus{
     void use() {
         BreakerBall B = BreakerBall.getBall();
         RandomGenerator r = new RandomGenerator();
-        B.setVelocity(B.getVelocityX()*r.nextDouble(0.8,1.2),B.getVelocityY()*1.3);
+        B.setVelocity(B.getVelocityX()*r.nextDouble(0.8,1.2),B.getVelocityY()*r.nextDouble(0.8,1.2));
     }
 
     @Override

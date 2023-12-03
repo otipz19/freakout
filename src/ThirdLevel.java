@@ -3,7 +3,7 @@ import acm.program.GraphicsProgram;
 public class ThirdLevel extends Level {
     public ThirdLevel(int width, int height) {
         super(width, height);
-        paddleWidth = 150;
+        paddleWidth = 100;
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
         bricksPerRow = 10;
@@ -19,6 +19,7 @@ public class ThirdLevel extends Level {
         bricksManager.addUltraBricks(10);
         shouldSpawnEnlargementBonus = true;
         shouldSpawnSpeedBonus = true;
+        ballSpeed = 10;
     }
 
     @Override

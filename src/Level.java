@@ -40,6 +40,7 @@ public abstract class Level implements IScene{
 
     protected boolean shouldSpawnEnlargementBonus;
     protected boolean shouldSpawnSpeedBonus;
+    protected double ballSpeed = 5;
 
     private GRect background;
 
@@ -53,7 +54,7 @@ public abstract class Level implements IScene{
         healthBar = new HealthBar(0, 0, width / 2, height / 10, lives);
         scoreBoard = new ScoreBoard(3 * width / 4, 0, width / 4, height / 10);
         container = new BoxContainer(0, height / 10, width, height);
-        ball = new BreakerBall(10, width / 2, height / 2, ballRadius * 2, ballRadius * 2);
+        ball = new BreakerBall(ballSpeed, width / 2, height / 2, ballRadius * 2, ballRadius * 2);
         paddle = new Paddle((width - paddleWidth) / 2, height - paddleYOffset, paddleWidth, paddleHeight, palette.getPaddle());
         bricksManager.spawn();
         Breakout.addObject(ball);
