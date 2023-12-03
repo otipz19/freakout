@@ -9,11 +9,21 @@ public class BreakerBall extends GCompound {
     private double AccelerationY = 0;
     private double VelocityX;
     private double VelocityY;
+    public void setVelocity(double vX, double vY){
+        VelocityX = vX;
+        VelocityY = vY;
+    }
+    public double getVelocityX(){return VelocityX;}
+    public double getVelocityY(){return VelocityY;}
     private double PositionX;
     private double PositionY;
     private double Width;
     private double Height;
     private boolean isActive;
+    static private BreakerBall Ball;
+    public static BreakerBall getBall() {
+        return Ball;
+    }
     public void setActive(boolean opt){
         isActive = opt;
     }
@@ -32,6 +42,7 @@ public class BreakerBall extends GCompound {
         Height = H;
         isActive = true;
         construct();
+        Ball = this;
     }
 
     /**
@@ -47,6 +58,7 @@ public class BreakerBall extends GCompound {
         Height = H;
         isActive = true;
         construct();
+        Ball = this;
     }
 
     public void update() {

@@ -1,11 +1,13 @@
 import acm.graphics.GOval;
 import acm.graphics.GRect;
 
-public class EnlagementBonus extends Bonus{
+import java.awt.*;
+
+public class SpeedBonus extends Bonus{
     private double AccelerationX = 0;
-    private double AccelerationY = 0;
+    private double AccelerationY = 0.3;
     private double VelocityX = 0;
-    private double VelocityY = 3;
+    private double VelocityY = 0;
     private double PositionX;
     private double PositionY;
     private double Width =20;
@@ -15,7 +17,7 @@ public class EnlagementBonus extends Bonus{
     /**
      * Basic constructor.(PosX,PosY)
      */
-    EnlagementBonus(double Px, double Py) {
+    SpeedBonus(double Px, double Py) {
         PositionX = Px;
         PositionY = Py;
         setLocation(PositionX, PositionY);
@@ -27,6 +29,7 @@ public class EnlagementBonus extends Bonus{
         ou.setFilled(false);
         add(ou);
         GRect in = new GRect(5, 5, 10, 10);
+        in.setColor(Color.GREEN);
         in.setFilled(true);
         add(in);
     }
@@ -43,7 +46,7 @@ public class EnlagementBonus extends Bonus{
         if((P.getX()<PositionX+Width&&P.getX()+P.getWidth()>PositionX)&&(P.getY()<PositionY+Height&&P.getY()+P.getHeight()>PositionY)){
             use();
             Breakout.removeObject(this);
-            Breakout.getLevel().firstEnlargementBonus=null;
+            Breakout.getLevel().firstSpeedBonus=null;
         }
     }
 
@@ -57,9 +60,10 @@ public class EnlagementBonus extends Bonus{
 
     @Override
     void use() {
-        Paddle P = Paddle.getPaddle();
-        P.scale(1.2,1);
+        BreakerBall B = BreakerBall.getBall();
+        B.setVelocity(B.getVelocityX()*1.3,B.getVelocityY()*1.3);
     }
+
     @Override
     void checkIfOutOfBounds() {
         if(PositionY>Breakout.getLevel().height){

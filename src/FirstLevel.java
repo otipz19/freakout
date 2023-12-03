@@ -6,8 +6,8 @@ public class FirstLevel extends Level {
         paddleWidth = 200;
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
-        bricksPerRow = 2;
-        bricksRows = 1;
+        bricksPerRow = 4;
+        bricksRows = 3;
         bricksGap = 4;
         brickHeight = 10;
         ballRadius = 10;
@@ -38,6 +38,9 @@ public class FirstLevel extends Level {
             ball.update();
             if(firstEnlargementBonus!=null){
                 firstEnlargementBonus.update();
+            }
+            if(firstSpeedBonus!=null){
+                firstSpeedBonus.update();
             }
         } else if (isStarted && isEnded) {
             end();
