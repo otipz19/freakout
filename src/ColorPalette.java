@@ -1,6 +1,12 @@
 import java.awt.*;
 
-public abstract class ColorPalette {
+public class ColorPalette {
+    public static final Color LIGHT_GRAY = new Color(0xf9f9f9);
+
+    public static final ColorPalette FIRST_PALETTE = new FirstPalette();
+    public static final ColorPalette SECOND_PALETTE = new SecondPalette();
+    public static final ColorPalette THIRD_PALETTE = new ThirdPalette();
+
     protected Color background;
     protected Color paddle;
     protected Color ball;

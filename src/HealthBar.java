@@ -7,7 +7,7 @@ public class HealthBar extends GCompound {
     private GImage thirdHeart;
 
     private int currentHealth;
-    private double heartWidth;
+    private double heartSize;
     private double heartGap;
     private double height;
 
@@ -15,7 +15,7 @@ public class HealthBar extends GCompound {
         this.setLocation(x, y);
         this.currentHealth = currentHealth;
         this.height = height;
-        heartWidth = width / 4;
+        heartSize = width / 4;
         heartGap = width / 16;
         drawHearts();
     }
@@ -34,8 +34,8 @@ public class HealthBar extends GCompound {
 
     private GImage drawHeart(int index) {
         GImage heart = new GImage(currentHealth >= index + 1 ? Images.HEART_FULL : Images.HEART_EMPTY);
-        heart.setSize(heartWidth, height);
-        heart.setLocation(heartGap * (index + 1) + heartWidth * index, 0);
+        heart.setSize(heartSize, heartSize);
+        heart.setLocation(heartGap * (index + 1) + heartSize * index, (height - heartSize) / 2);
         add(heart);
         return heart;
     }

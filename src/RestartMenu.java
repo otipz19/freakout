@@ -5,8 +5,8 @@ import acm.program.GraphicsProgram;
 import java.awt.event.MouseEvent;
 
 public class RestartMenu extends BaseMenu {
-    private static final String LEVEL_MENU_BTN_LABEL = "Levels";
-    public static final String RESTART_BTN_LABEL = "Restart";
+    private static final String LEVEL_MENU_BTN_LABEL = "LEVELS";
+    public static final String RESTART_BTN_LABEL = "RESTART";
     private GLabel resultLabel;
     private Button restartBtn;
     private Button levelMenuBtn;
@@ -19,7 +19,7 @@ public class RestartMenu extends BaseMenu {
 
     @Override
     public void setup() {
-        Breakout.clearCanvas();
+        drawBackground(ColorPalette.FIRST_PALETTE.getBackground());
         drawResultLabel();
         drawRestartBtn();
         drawLevelMenuBtn();
@@ -47,24 +47,26 @@ public class RestartMenu extends BaseMenu {
         double x = (this.width - width) / 2;
         double y = ySection * 3;
         resultLabel = new SmartLabel(x, y, width, height, labelText, FONT);
+        resultLabel.setColor(ColorPalette.LIGHT_GRAY);
         Breakout.addObject(resultLabel);
     }
 
     private void drawLevelMenuBtn() {
-        double width = xSection * 3;
-        double height = ySection * 2;
-        double x = xSection * 6;
-        double y = ySection * 8;
-        levelMenuBtn = new Button(x, y, width, height, LEVEL_MENU_BTN_LABEL, FONT);
-        Breakout.addObject(levelMenuBtn);
+        levelMenuBtn = drawBtn(xSection * 6, LEVEL_MENU_BTN_LABEL);
     }
 
     private void drawRestartBtn() {
+        restartBtn = drawBtn(xSection, RESTART_BTN_LABEL);
+    }
+
+    private Button drawBtn(double x, String text) {
         double width = xSection * 3;
         double height = ySection * 2;
-        double x = xSection;
         double y = ySection * 8;
-        restartBtn = new Button(x, y, width, height, RESTART_BTN_LABEL, FONT);
-        Breakout.addObject(restartBtn);
+        Button btn = new Button(x, y, width, height, text, FONT);
+        Breakout.addObject(btn);
+        btn.setTextColor(ColorPalette.LIGHT_GRAY);
+        btn.setBackgroundColor(ColorPalette.FIRST_PALETTE.getPaddle());
+        return btn;
     }
 }
