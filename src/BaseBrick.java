@@ -1,7 +1,11 @@
 import acm.graphics.*;
+import acm.util.RandomGenerator;
+
 import java.awt.Color;
 
 public abstract class BaseBrick extends GCompound implements ICollidable {
+    private static final RandomGenerator rng = RandomGenerator.getInstance();
+
     protected static final int SIMPLE_BRICK_SCORE = 5;
     protected static final int SIMPLE_BRICK_LIVES = 1;
     protected static final int REINFORCED_BRICK_SCORE = 20;
@@ -29,11 +33,21 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
             if(lives <= 0){
                 Breakout.getLevel().addScore(score);
                 BricksManager.getInstance().brickDestroyed();
-                if (Breakout.getLevel().firstEnlargementBonus == null) {
-                    EnlagementBonus a = new EnlagementBonus(getX(), getY());
-                    Breakout.getLevel().firstEnlargementBonus = a;
-                    Breakout.addObject(a);
-
+                switch (rng.nextInt(2)){
+                    case 0:
+                        if(Breakout.getLevel().firstEnlargementBonus == null){
+                            EnlagementBonus a = new EnlagementBonus(getX(),getY());
+                            Breakout.getLevel().firstEnlargementBonus = a;
+                            Breakout.addObject(a);
+                        }
+                        break;
+                    case 1:
+                        if(Breakout.getLevel().firstSpeedBonus == null){
+                            SpeedBonus a = new SpeedBonus(getX(),getY());
+                            Breakout.getLevel().firstSpeedBonus = a;
+                            Breakout.addObject(a);
+                        }
+                        break;
                 }
                 Breakout.removeObject(this);
             }

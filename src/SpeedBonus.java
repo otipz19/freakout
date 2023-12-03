@@ -42,8 +42,8 @@ public class SpeedBonus extends Bonus{
     }
     @Override
     void collideWithActivator() {
-        Paddle P = Paddle.getPaddle();
-        if((P.getX()<PositionX+Width&&P.getX()+P.getWidth()>PositionX)&&(P.getY()<PositionY+Height&&P.getY()+P.getHeight()>PositionY)){
+        Paddle P = Paddle.getInstance();
+        if(P != null && (P.getX()<PositionX+Width&&P.getX()+P.getWidth()>PositionX)&&(P.getY()<PositionY+Height&&P.getY()+P.getHeight()>PositionY)){
             use();
             Breakout.removeObject(this);
             Breakout.getLevel().firstSpeedBonus=null;
