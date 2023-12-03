@@ -7,7 +7,7 @@ public class FirstLevel extends Level {
         paddleWidth = 100;
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
-        bricksPerRow = 20;
+        bricksPerRow = 10;
         bricksRows = 6;
         bricksGap = 4;
         brickHeight = 20;
@@ -25,7 +25,7 @@ public class FirstLevel extends Level {
         healthBar = new HealthBar(0, 0, width / 4, height / 10, lives);
         scoreBoard = new ScoreBoard(3 * width / 4, 0, width / 4, height / 10);
         container = new BoxContainer(0, height / 10, width, height);
-        ball = new BreakerBall(5, 200, 200, ballRadius * 2, ballRadius * 2);
+        ball = new BreakerBall(10, width / 2, height / 2, ballRadius * 2, ballRadius * 2);
         paddle = new Paddle((width - paddleWidth) / 2, height - paddleYOffset, paddleWidth, paddleHeight, palette.getPaddle());
         Breakout.addObject(ball);
         Breakout.addObject(paddle);

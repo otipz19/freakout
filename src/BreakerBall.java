@@ -2,7 +2,6 @@ import acm.graphics.GCompound;
 import acm.graphics.GObject;
 import acm.graphics.GOval;
 import acm.graphics.GPoint;
-import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
 
 public class BreakerBall extends GCompound implements ICollidable{
@@ -55,8 +54,8 @@ public class BreakerBall extends GCompound implements ICollidable{
             checkCollisionsWithObjects();
             updateStatesNoCollision();
             setLocation(PositionX, PositionY);
-        }else{
-            Paddle P = Paddle.getPaddle();
+        }else if(Paddle.getInstance() != null){
+            Paddle P = Paddle.getInstance();
             PositionX = P.getX()+P.getWidth()/2-Width/2;
             PositionY = P.getY()-Height-5;
             setLocation(P.getX()+P.getWidth()/2-Width/2,P.getY()-Height-5);

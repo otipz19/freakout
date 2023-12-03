@@ -51,18 +51,18 @@ public class RestartMenu extends BaseMenu {
     }
 
     private void drawLevelMenuBtn() {
-        double width = resultLabel.getWidth();
+        double width = xSection * 3;
         double height = ySection * 2;
-        double x = this.width / 2 + width / 2;
+        double x = xSection * 6;
         double y = ySection * 8;
         levelMenuBtn = new Button(x, y, width, height, LEVEL_MENU_BTN_LABEL, FONT);
         Breakout.addObject(levelMenuBtn);
     }
 
     private void drawRestartBtn() {
-        double width = resultLabel.getWidth();
+        double width = xSection * 3;
         double height = ySection * 2;
-        double x = this.width / 2 - 3 * width / 2;
+        double x = xSection;
         double y = ySection * 8;
         restartBtn = new Button(x, y, width, height, RESTART_BTN_LABEL, FONT);
         Breakout.addObject(restartBtn);

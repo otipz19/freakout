@@ -29,6 +29,12 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
             if(lives <= 0){
                 Breakout.getLevel().addScore(score);
                 BricksManager.getInstance().brickDestroyed();
+                if (Breakout.getLevel().firstEnlargementBonus == null) {
+                    EnlagementBonus a = new EnlagementBonus(getX(), getY());
+                    Breakout.getLevel().firstEnlargementBonus = a;
+                    Breakout.addObject(a);
+
+                }
                 Breakout.removeObject(this);
             }
         }
