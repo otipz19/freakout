@@ -115,6 +115,7 @@ public class BreakerBall extends GCompound implements ICollidable{
         } else {
             VelocityX *= ReflectVec.getX();
             VelocityY *= ReflectVec.getY();
+            AudioManager.playBounce();
         }
     }
 
@@ -162,6 +163,7 @@ public class BreakerBall extends GCompound implements ICollidable{
                 ICollidable collidable = (ICollidable)object;
                 lastCollision = collidable;
                 collidable.onCollision(this);
+                AudioManager.playBounce();
                 return;
             }
         }

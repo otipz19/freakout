@@ -17,4 +17,10 @@ public class FirstLevel extends Level {
         brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
         palette = ColorPalette.FIRST_PALETTE;
     }
+
+    @Override
+    public void setup(){
+        super.setup();
+        AudioManager.playLevelBackground(0);
+    }
 }

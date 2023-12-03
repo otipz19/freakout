@@ -16,4 +16,10 @@ public class SecondLevel extends Level {
         brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
         palette = new SecondPalette();
     }
+
+    @Override
+    public void setup(){
+        super.setup();
+        AudioManager.playLevelBackground(1);
+    }
 }

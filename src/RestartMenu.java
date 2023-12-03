@@ -23,6 +23,12 @@ public class RestartMenu extends BaseMenu {
         drawResultLabel();
         drawRestartBtn();
         drawLevelMenuBtn();
+        if(Breakout.getLastGameResult().isWon()){
+            AudioManager.playWin();
+        }
+        else{
+            AudioManager.playLose();
+        }
     }
 
     @Override

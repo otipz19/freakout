@@ -50,6 +50,7 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
                         break;
                 }
                 Breakout.removeObject(this);
+                AudioManager.playBrickBreak();
             }
         }
     }

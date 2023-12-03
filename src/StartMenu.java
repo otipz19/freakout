@@ -14,7 +14,7 @@ public class StartMenu extends BaseMenu{
 
     @Override
     public void setup() {
-       drawBackground(palette.background);
+        drawBackground(palette.background);
         title = new SmartLabel(xSection * 3, ySection * 3, xSection * 4, ySection * 2, "BREAKOUT", FONT);
         title.setColor(palette.LIGHT_GRAY);
         Breakout.addObject(title);
@@ -25,6 +25,7 @@ public class StartMenu extends BaseMenu{
         authors = new SmartLabel(xSection * 2, ySection * 13, xSection * 6, ySection * 2, "Made by Alex, Orest and Max", FONT);
         authors.setColor(palette.LIGHT_GRAY);
         Breakout.addObject(authors);
+        AudioManager.playMenuBackground();
     }
 
     @Override

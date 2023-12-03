@@ -18,6 +18,7 @@ public class LevelMenu extends BaseMenu{
         firstBtn = drawBtn(ySection * 3, "LEVEL 1", ColorPalette.FIRST_PALETTE);
         secondBtn = drawBtn(ySection * 7, "LEVEL 2", ColorPalette.SECOND_PALETTE);
         thirdBtn = drawBtn(ySection * 11, "LEVEL 3", ColorPalette.THIRD_PALETTE);
+        AudioManager.playMenuBackground();
     }
 
     @Override

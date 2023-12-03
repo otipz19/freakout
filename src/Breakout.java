@@ -26,6 +26,10 @@ public class Breakout extends GraphicsProgram {
 	private static GameResult bestGameResult;
 	private static SceneType lastLevelType = SceneType.FIRST_LEVEL;
 
+	public static GameResult getLastGameResult(){
+		return lastGameResult;
+	}
+
 	public static void setLastGameResult(GameResult lastGameResult) {
 		Breakout.lastGameResult = lastGameResult;
 		if(bestGameResult == null || bestGameResult.getScore() < lastGameResult.getScore()){
