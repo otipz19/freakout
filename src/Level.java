@@ -42,7 +42,8 @@ public abstract class Level implements IScene{
     protected ScoreBoard scoreBoard;
     protected ColorPalette palette;
     protected int score;
-    protected EnlagementBonus firstEnlargementBonus = null;
+    public EnlagementBonus firstEnlargementBonus = null;
+    public SpeedBonus firstSpeedBonus = null;
 
     private GRect background;
 

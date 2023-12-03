@@ -10,6 +10,12 @@ public class BreakerBall extends GCompound implements ICollidable{
     private double Vy0, Vx0;
     private double VelocityX;
     private double VelocityY;
+    public void setVelocity(double vX, double vY){
+        VelocityX = vX;
+        VelocityY = vY;
+    }
+    public double getVelocityX(){return VelocityX;}
+    public double getVelocityY(){return VelocityY;}
     private double PositionX;
     private double PositionY;
     private double Width;
@@ -18,6 +24,13 @@ public class BreakerBall extends GCompound implements ICollidable{
 
     private ICollidable lastCollision;
 
+    static private BreakerBall Ball;
+    public static BreakerBall getBall() {
+        return Ball;
+    }
+    public void setActive(boolean opt){
+        isActive = opt;
+    }
 
     /**
      * Full constructor.(AccelerationX,AccelerationY,VelocityX,VelocityY,PosX,PosY,Width,Height
@@ -42,10 +55,7 @@ public class BreakerBall extends GCompound implements ICollidable{
         Height = H;
         isActive = false;
         construct();
-    }
-
-    public void setActive(boolean opt){
-        isActive = opt;
+        Ball = this;
     }
 
     public void update() {
@@ -65,7 +75,7 @@ public class BreakerBall extends GCompound implements ICollidable{
 
     @Override
     public void onCollision(ICollidable other) {
-        
+
     }
 
     /**
@@ -111,7 +121,11 @@ public class BreakerBall extends GCompound implements ICollidable{
     }
 
     private void handleOutOfBounds(){
-        isActive = false;
+        GPoint center = BoxContainer.getContainer().getCenter();
+        setLocation(center);
+        PositionX = center.getX();
+        PositionY = center.getY();
+        setActive(false);
         Breakout.getLevel().decrementLife();
     }
 

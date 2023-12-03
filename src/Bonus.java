@@ -15,4 +15,6 @@ public abstract class Bonus extends GCompound {
     abstract void move();
     abstract void collideWithActivator();
     abstract void use();
+
+    abstract void checkIfOutOfBounds();
 }

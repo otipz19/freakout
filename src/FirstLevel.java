@@ -41,6 +41,9 @@ public class FirstLevel extends Level {
             if(firstEnlargementBonus!=null){
                 firstEnlargementBonus.update();
             }
+            if(firstSpeedBonus!=null){
+                firstSpeedBonus.update();
+            }
         } else if (isStarted && isEnded) {
             end();
         }
