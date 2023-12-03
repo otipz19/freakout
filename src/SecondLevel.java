@@ -6,15 +6,16 @@ public class SecondLevel extends Level {
         paddleWidth = 150;
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
-        bricksPerRow = 5;
-        bricksRows = 3;
-        bricksGap = 6;
-        brickHeight = 10;
+        bricksPerRow = 10;
+        bricksRows = 4;
         ballRadius = 10;
         brickYOffset = 70;
         lives = 3;
-        brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
         palette = new SecondPalette();
+        createBricksManager();
+        bricksManager.setRows(bricksRows);
+        bricksManager.setBricksInRow(bricksPerRow);
+        bricksManager.addReinforcedBricks(20);
     }
 
     @Override

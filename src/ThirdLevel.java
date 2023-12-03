@@ -7,14 +7,16 @@ public class ThirdLevel extends Level {
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
         bricksPerRow = 10;
-        bricksRows = 5;
-        bricksGap = 6;
-        brickHeight = 10;
+        bricksRows = 6;
         ballRadius = 10;
         brickYOffset = 70;
         lives = 3;
-        brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
         palette = new ThirdPalette();
+        createBricksManager();
+        bricksManager.setRows(bricksRows);
+        bricksManager.setBricksInRow(bricksPerRow);
+        bricksManager.addReinforcedBricks(40);
+        bricksManager.addUltraBricks(10);
     }
 
     @Override

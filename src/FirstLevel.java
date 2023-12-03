@@ -8,14 +8,14 @@ public class FirstLevel extends Level {
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
         bricksPerRow = 10;
-        bricksRows = 6;
-        bricksGap = 4;
-        brickHeight = 20;
+        bricksRows = 2;
         ballRadius = 10;
         brickYOffset = 70;
         lives = 3;
-        brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
         palette = ColorPalette.FIRST_PALETTE;
+        createBricksManager();
+        bricksManager.setRows(bricksRows);
+        bricksManager.setBricksInRow(bricksPerRow);
     }
 
     @Override

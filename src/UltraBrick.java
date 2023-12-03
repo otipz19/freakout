@@ -28,7 +28,6 @@ public class UltraBrick extends BaseBrick {
 
             }
             BricksManager man = Breakout.getLevel().bricksManager;
-            man.incrementBricksCount(1);
             Breakout.addObject(new ReinforcedBrick(x, y, width, height, color));
             for (int row = 0; row < 3; row++) {
                 for (int brickIndex = 0; brickIndex < 3; brickIndex++) {
@@ -37,6 +36,7 @@ public class UltraBrick extends BaseBrick {
                     ColorPalette palette = Breakout.getLevel().getPalette();
                     BaseBrick brick;
                     brick = new SimpleBrick(brickX, brickY, width, height, palette.getBrickColor(row));
+                    man.incrementBricksCount(1);
                     Breakout.addObject(brick);
                 }
             }
