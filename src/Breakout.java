@@ -23,8 +23,12 @@ public class Breakout extends GraphicsProgram {
 	private static IScene scene;
 
 	private static GameResult lastGameResult;
-	private static GameResult bestGameResult;
+	private static GameResult bestGameResult = new GameResult(false, ScoreSerializer.getBestScore());
 	private static SceneType lastLevelType = SceneType.FIRST_LEVEL;
+
+	public static GameResult getBestGameResult(){
+		return bestGameResult;
+	}
 
 	public static GameResult getLastGameResult(){
 		return lastGameResult;
@@ -34,6 +38,7 @@ public class Breakout extends GraphicsProgram {
 		Breakout.lastGameResult = lastGameResult;
 		if(bestGameResult == null || bestGameResult.getScore() < lastGameResult.getScore()){
 			bestGameResult = lastGameResult;
+			ScoreSerializer.setBestScore(bestGameResult.getScore());
 		}
 	}
 

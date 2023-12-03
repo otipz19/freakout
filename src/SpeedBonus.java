@@ -28,6 +28,7 @@ public class SpeedBonus extends Bonus{
     private void construct() {
         GRect ou = new GRect(0, 0, Width, Height);
         ou.setFilled(false);
+        ou.setColor(Color.GREEN);
         add(ou);
         GRect in = new GRect(5, 5, 10, 10);
         in.setColor(Color.GREEN);
@@ -64,7 +65,7 @@ public class SpeedBonus extends Bonus{
     void use() {
         BreakerBall B = BreakerBall.getBall();
         RandomGenerator r = new RandomGenerator();
-        B.setVelocity(B.getVelocityX()*r.nextDouble(0.8,1.2),B.getVelocityY()*1.3);
+        B.setVelocity(B.getVelocityX()*r.nextDouble(0.8,1.1),B.getVelocityY()*1.3);
     }
 
     @Override

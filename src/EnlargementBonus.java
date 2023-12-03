@@ -1,7 +1,9 @@
 import acm.graphics.GRect;
 import acm.util.RandomGenerator;
 
-public class EnlagementBonus extends Bonus{
+import java.awt.*;
+
+public class EnlargementBonus extends Bonus{
     private double AccelerationX = 0;
     private double AccelerationY = 0;
     private double VelocityX = 0;
@@ -15,7 +17,7 @@ public class EnlagementBonus extends Bonus{
     /**
      * Basic constructor.(PosX,PosY)
      */
-    EnlagementBonus(double Px, double Py) {
+    EnlargementBonus(double Px, double Py) {
         PositionX = Px;
         PositionY = Py;
         setLocation(PositionX, PositionY);
@@ -25,9 +27,11 @@ public class EnlagementBonus extends Bonus{
     private void construct() {
         GRect ou = new GRect(0, 0, Width, Height);
         ou.setFilled(false);
+        ou.setColor(Color.RED);
         add(ou);
         GRect in = new GRect(5, 5, 10, 10);
         in.setFilled(true);
+        in.setFillColor(Color.RED);
         add(in);
     }
     public void update() {
@@ -60,7 +64,7 @@ public class EnlagementBonus extends Bonus{
     void use() {
         Paddle P = Paddle.getInstance();
         RandomGenerator r = new RandomGenerator();
-        P.scale(r.nextDouble(0.9,1.1),1);
+        P.scale(r.nextDouble(1,1.1),1);
     }
     @Override
     void checkIfOutOfBounds() {

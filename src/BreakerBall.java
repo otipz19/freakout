@@ -91,7 +91,7 @@ public class BreakerBall extends GCompound implements ICollidable{
 
     /** randomize vx in range 30 - 60 deg*/
     private void randVX(boolean randSign){
-        VelocityX = Math.signum(VelocityX) * Math.abs(VelocityY) * RandomGenerator.getInstance().nextDouble(1,2);
+        VelocityX = Math.abs(VelocityY) * RandomGenerator.getInstance().nextDouble(0.7,1.3);
         if(randSign)
             VelocityX *= randSign();
     }

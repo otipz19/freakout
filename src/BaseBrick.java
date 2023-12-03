@@ -11,7 +11,7 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
     protected static final int REINFORCED_BRICK_SCORE = 20;
     protected static final int REINFORCED_BRICK_LIVES = 2;
     protected static final int ULTRA_BRICK_SCORE = 50;
-    protected static final int ULTRA_BRICK_LIVES = 1;
+    protected static final int ULTRA_BRICK_LIVES = 3;
 
     private final int score;
     protected int lives;
@@ -28,6 +28,10 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
         add(rect);
     }
 
+    public Color getColor(){
+        return rect.getColor();
+    }
+
     public void onCollision(ICollidable other) {
         if (other instanceof BreakerBall) {
             lives--;
@@ -37,14 +41,16 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
                 BricksManager.getInstance().brickDestroyed();
                 switch (rng.nextInt(2)){
                     case 0:
-                        if(Breakout.getLevel().firstEnlargementBonus == null){
-                            EnlagementBonus a = new EnlagementBonus(getX(),getY());
+                        if(Breakout.getLevel().shouldSpawnEnlargementBonus &&
+                                Breakout.getLevel().firstEnlargementBonus == null){
+                            EnlargementBonus a = new EnlargementBonus(getX(),getY());
                             Breakout.getLevel().firstEnlargementBonus = a;
                             Breakout.addObject(a);
                         }
                         break;
                     case 1:
-                        if(Breakout.getLevel().firstSpeedBonus == null){
+                        if(Breakout.getLevel().shouldSpawnSpeedBonus &&
+                                Breakout.getLevel().firstSpeedBonus == null){
                             SpeedBonus a = new SpeedBonus(getX(),getY());
                             Breakout.getLevel().firstSpeedBonus = a;
                             Breakout.addObject(a);

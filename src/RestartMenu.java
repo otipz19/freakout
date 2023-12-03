@@ -8,6 +8,8 @@ public class RestartMenu extends BaseMenu {
     private static final String LEVEL_MENU_BTN_LABEL = "LEVELS";
     public static final String RESTART_BTN_LABEL = "RESTART";
     private GLabel resultLabel;
+    private GLabel curScoreLabel;
+    private GLabel bestScoreLabel;
     private Button restartBtn;
     private Button levelMenuBtn;
     private final String labelText;
@@ -21,6 +23,8 @@ public class RestartMenu extends BaseMenu {
     public void setup() {
         drawBackground(ColorPalette.FIRST_PALETTE.getBackground());
         drawResultLabel();
+        drawCurScoreLabel();
+        drawBestScoreLabel();
         drawRestartBtn();
         drawLevelMenuBtn();
         if(Breakout.getLastGameResult().isWon()){
@@ -48,13 +52,27 @@ public class RestartMenu extends BaseMenu {
     }
 
     private void drawResultLabel(){
+        resultLabel = drawLabel(ySection * 2, labelText);
+    }
+
+    private void drawCurScoreLabel(){
+        int currentScore = Breakout.getLastGameResult().getScore();
+        curScoreLabel = drawLabel(ySection * 5, "Your score: " + currentScore);
+    }
+
+    private void drawBestScoreLabel(){
+        int bestScore = Breakout.getBestGameResult().getScore();
+        bestScoreLabel = drawLabel(ySection * 7, "Best score: " + bestScore);
+    }
+
+    private GLabel drawLabel(double y, String text) {
         double width = xSection * 4;
         double height = ySection * 2;
         double x = (this.width - width) / 2;
-        double y = ySection * 3;
-        resultLabel = new SmartLabel(x, y, width, height, labelText, FONT);
-        resultLabel.setColor(ColorPalette.LIGHT_GRAY);
-        Breakout.addObject(resultLabel);
+        GLabel label = new SmartLabel(x, y, width, height, text, FONT);
+        label.setColor(ColorPalette.LIGHT_GRAY);
+        Breakout.addObject(label);
+        return label;
     }
 
     private void drawLevelMenuBtn() {
@@ -68,7 +86,7 @@ public class RestartMenu extends BaseMenu {
     private Button drawBtn(double x, String text) {
         double width = xSection * 3;
         double height = ySection * 2;
-        double y = ySection * 8;
+        double y = ySection * 10;
         Button btn = new Button(x, y, width, height, text, FONT);
         Breakout.addObject(btn);
         btn.setTextColor(ColorPalette.LIGHT_GRAY);

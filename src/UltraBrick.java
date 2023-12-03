@@ -1,3 +1,6 @@
+import acm.graphics.GObject;
+import com.sun.org.apache.regexp.internal.RE;
+
 import java.awt.*;
 
 public class UltraBrick extends BaseBrick {
@@ -28,7 +31,6 @@ public class UltraBrick extends BaseBrick {
 
             }
             BricksManager man = Breakout.getLevel().bricksManager;
-            man.incrementBricksCount(1);
             Breakout.addObject(new ReinforcedBrick(x, y, width, height, color));
             for (int row = 0; row < 3; row++) {
                 for (int brickIndex = 0; brickIndex < 3; brickIndex++) {
