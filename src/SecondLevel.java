@@ -23,7 +23,6 @@ public class SecondLevel extends Level {
         scoreBoard = new ScoreBoard(3 * width / 4, 0, width / 4, height / 10);
         container = new BoxContainer(0, height / 10, width, height);
         ball = new BreakerBall(10, 200, 200, ballRadius * 2, ballRadius * 2);
-        ball.respawn();
         paddle = new Paddle(paddleWidth, paddleHeight);
         paddle.setLocation( (width - paddleWidth) / 2, height - paddleYOffset);
         Breakout.addObject(ball);

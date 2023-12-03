@@ -10,8 +10,15 @@ public class BoxContainer {
     private double topY;
     private double rightX;
     private double bottomY;
-    public GPoint getRespawnPoint(){
-        return new GPoint((leftX+rightX)/2, (topY+bottomY)/3);
+    public double getLeftX(){return leftX;};
+    public double getTopY(){return topY;};
+    public double getRightX(){return rightX;};
+    public double getBottomY(){return bottomY;};
+    public GPoint getCenter(){
+        return new GPoint((leftX+rightX)/2, (topY+bottomY)/2);
+    }
+    public GPoint getRespawnPoint() {
+        return new GPoint((leftX + rightX) / 2, (topY + bottomY) / 3);
     }
     /**
      * creates a basic box container(xTop, yTop,xBottom,yBottom)

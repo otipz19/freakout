@@ -24,7 +24,6 @@ public class FirstLevel extends Level {
         scoreBoard = new ScoreBoard(3 * width / 4, 0, width / 4, height / 10);
         container = new BoxContainer(0, height / 10, width, height);
         ball = new BreakerBall(5, 200, 200, ballRadius * 2, ballRadius * 2);
-        ball.respawn();
         paddle = new Paddle(paddleWidth, paddleHeight);
         paddle.setLocation( (width - paddleWidth) / 2, height - paddleYOffset);
         Breakout.addObject(ball);
@@ -38,6 +37,9 @@ public class FirstLevel extends Level {
     public void update() {
         if (isStarted && !isEnded()) {
             ball.update();
+            if(firstEnlargementBonus!=null){
+                firstEnlargementBonus.update();
+            }
         } else if (isStarted && isEnded) {
             end();
         }

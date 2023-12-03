@@ -42,6 +42,7 @@ public abstract class Level implements IScene{
     protected ScoreBoard scoreBoard;
 
     protected int score;
+    protected EnlagementBonus firstEnlargementBonus = null;
 
     public Level(int width, int height) {
         this.width = width;

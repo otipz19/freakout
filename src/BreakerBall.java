@@ -5,7 +5,7 @@ import acm.graphics.GPoint;
 import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
 
-public class BreakerBall extends GCompound {
+public class BreakerBall extends GCompound implements ICollidable{
     private double AccelerationX = 0;
     private double AccelerationY = 0;
     private double Vy0, Vx0;
@@ -16,9 +16,9 @@ public class BreakerBall extends GCompound {
     private double Width;
     private double Height;
     private boolean isActive;
-    public void setActive(boolean opt){
-        isActive = opt;
-    }
+
+    private ICollidable lastCollision;
+
 
     /**
      * Full constructor.(AccelerationX,AccelerationY,VelocityX,VelocityY,PosX,PosY,Width,Height
@@ -45,13 +45,28 @@ public class BreakerBall extends GCompound {
         construct();
     }
 
+    public void setActive(boolean opt){
+        isActive = opt;
+    }
+
     public void update() {
         if(isActive) {
             collideWithContainer();
             checkCollisionsWithObjects();
             updateStatesNoCollision();
             setLocation(PositionX, PositionY);
+        }else{
+            Paddle P = Paddle.getPaddle();
+            PositionX = P.getX()+P.getWidth()/2-Width/2;
+            PositionY = P.getY()-Height-5;
+            setLocation(P.getX()+P.getWidth()/2-Width/2,P.getY()-Height-5);
+            randVX(true);
         }
+    }
+
+    @Override
+    public void onCollision(ICollidable other) {
+        
     }
 
     /**
@@ -91,21 +106,23 @@ public class BreakerBall extends GCompound {
         } else {
             VelocityX *= ReflectVec.getX();
             VelocityY *= ReflectVec.getY();
+            //PositionX = Math.max(Math.min(PositionX,BoxContainer.getContainer().getRightX()-Width/2),BoxContainer.getContainer().getLeftX()+Width/2);
+            //PositionX = Math.max(Math.min(PositionX,BoxContainer.getContainer().getBottomY()-Height/2),BoxContainer.getContainer().getTopY()+Height/2);
         }
     }
     private void handleOutOfBounds(){
-        respawn();
+        isActive = false;
         Breakout.getLevel().decrementLife();
     }
 
-    public void respawn(){
+    /*public void respawn(){
         GPoint resp = BoxContainer.getContainer().getRespawnPoint();
         setLocation(resp);
         PositionX = resp.getX();
         PositionY = resp.getY();
         setActive(false);
         randVX(true);
-    }
+    }*/
 
     private void construct() {
         GOval ov = new GOval(0, 0, Width, Height);
@@ -113,20 +130,13 @@ public class BreakerBall extends GCompound {
         add(ov);
     }
 
-    private void checkCollisionsWithObjects() {
-        GObject object = collideAndReturnObject();
-        if (object instanceof Brick) {
-            Brick brick = (Brick)object;
-            brick.onCollision();
-        }
-    }
 
     /**
      * Checks collisions by 8 points.
      * Each point is got by rotating around the centre of ball,
      * starting from the centre of right side of circumscribed square
      */
-    private GObject collideAndReturnObject(){
+    private void checkCollisionsWithObjects() {
         double startX = getX() + Width;
         double startY = getY() + Height / 2;
         double midX = getX() + Width / 2;
@@ -136,16 +146,19 @@ public class BreakerBall extends GCompound {
             double xTurned = midX + (startX - midX) * Math.cos(radians) - (startY - midY) * Math.sin(radians);
             double yTurned = midY + (startX - midX) * Math.sin(radians) + (startY - midY) * Math.cos(radians);
             GObject object = Breakout.getObjectAt(xTurned, yTurned);
-            if(object != null && object != this){
+            if(object instanceof ICollidable && object != this && object != lastCollision){
                 if(angle == 0 || angle == 180){
                     VelocityX *= -1;
                 }
                 else{
                     VelocityY *= -1;
                 }
-                return object;
+                ICollidable collidable = (ICollidable)object;
+                lastCollision = collidable;
+                collidable.onCollision(this);
+                return;
             }
         }
-        return null;
+        lastCollision = null;
     }
 }
