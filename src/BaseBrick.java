@@ -28,6 +28,10 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
         add(rect);
     }
 
+    public Color getColor(){
+        return rect.getColor();
+    }
+
     public void onCollision(ICollidable other) {
         if (other instanceof BreakerBall) {
             lives--;

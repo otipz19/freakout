@@ -1,3 +1,6 @@
+import acm.graphics.GObject;
+import com.sun.org.apache.regexp.internal.RE;
+
 import java.awt.*;
 
 public class UltraBrick extends BaseBrick {
@@ -34,10 +37,19 @@ public class UltraBrick extends BaseBrick {
                     double brickX = x - width - man.HORIZ_OFF + (man.HORIZ_OFF + width) * brickIndex;
                     double brickY = y - man.VERT_OFF - height + (man.VERT_OFF + height) * row;
                     ColorPalette palette = Breakout.getLevel().getPalette();
-                    BaseBrick brick;
-                    brick = new SimpleBrick(brickX, brickY, width, height, palette.getBrickColor(row));
-                    man.incrementBricksCount(1);
-                    Breakout.addObject(brick);
+                    GObject object = Breakout.getObjectAt(brickX, brickY);
+                    if(object instanceof SimpleBrick){
+                        Color colorBrick = object.getColor();
+                        Breakout.removeObject(object);
+                        ReinforcedBrick brick = new ReinforcedBrick(brickX, brickY, width, height, colorBrick);
+                        Breakout.addObject(brick);
+                    }
+                    else if(object == null){
+                        BaseBrick brick;
+                        brick = new SimpleBrick(brickX, brickY, width, height, palette.getBrickColor(row));
+                        man.incrementBricksCount(1);
+                        Breakout.addObject(brick);
+                    }
                 }
             }
         }
