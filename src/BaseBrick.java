@@ -4,6 +4,8 @@ import java.awt.Color;
 public abstract class BaseBrick extends GCompound implements ICollidable {
     protected static final int SIMPLE_BRICK_SCORE = 5;
     protected static final int SIMPLE_BRICK_LIVES = 1;
+    protected static final int REINFORCED_BRICK_SCORE = 20;
+    protected static final int REINFORCED_BRICK_LIVES = 2;
 
     private final int score;
     protected int lives;
