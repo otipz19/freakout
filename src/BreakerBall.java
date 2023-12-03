@@ -115,8 +115,6 @@ public class BreakerBall extends GCompound implements ICollidable{
         } else {
             VelocityX *= ReflectVec.getX();
             VelocityY *= ReflectVec.getY();
-            //PositionX = Math.max(Math.min(PositionX,BoxContainer.getContainer().getRightX()-Width/2),BoxContainer.getContainer().getLeftX()+Width/2);
-            //PositionX = Math.max(Math.min(PositionX,BoxContainer.getContainer().getBottomY()-Height/2),BoxContainer.getContainer().getTopY()+Height/2);
         }
     }
 
@@ -128,15 +126,6 @@ public class BreakerBall extends GCompound implements ICollidable{
         setActive(false);
         Breakout.getLevel().decrementLife();
     }
-
-    /*public void respawn(){
-        GPoint resp = BoxContainer.getContainer().getRespawnPoint();
-        setLocation(resp);
-        PositionX = resp.getX();
-        PositionY = resp.getY();
-        setActive(false);
-        randVX(true);
-    }*/
 
     private void construct() {
         GOval ov = new GOval(0, 0, Width, Height);

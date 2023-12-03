@@ -78,9 +78,11 @@ public class Breakout extends GraphicsProgram {
 				break;
 			case SECOND_LEVEL:
 				scene = new SecondLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				lastLevelType = sceneType;
 				break;
 			case THIRD_LEVEL:
 				scene = new ThirdLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				lastLevelType = sceneType;
 				break;
 		}
 	}
