@@ -1,26 +1,41 @@
-import acm.graphics.GCompound;
+import acm.graphics.*;
+import java.awt.Color;
 
-public class BaseBrick extends GCompound implements ICollidable {
+public abstract class BaseBrick extends GCompound implements ICollidable {
     protected static final int SIMPLE_BRICK_SCORE = 5;
     protected static final int SIMPLE_BRICK_LIVES = 1;
 
-    private int score;
-    private int lives;
+    private final int score;
+    protected int lives;
+    private final GRect rect;
 
-    public BaseBrick(double x, double y, int score, int lives) {
+    public BaseBrick(double x, double y, int score, int lives, double width, double height, Color color) {
         this.setLocation(x, y);
         this.score = score;
         this.lives = lives;
+        rect = new GRect(0, 0, width, height);
+        rect.setColor(color);
+        rect.setFillColor(color);
+        rect.setFilled(true);
+        add(rect);
     }
 
     public void onCollision(ICollidable other) {
         if (other instanceof BreakerBall) {
             lives--;
+            onLiveDecrease();
             if(lives <= 0){
                 Breakout.getLevel().addScore(score);
                 BricksManager.getInstance().brickDestroyed();
                 Breakout.removeObject(this);
             }
         }
+    }
+
+    protected abstract void onLiveDecrease();
+
+    protected void changeColor(Color color){
+        rect.setColor(color);
+        rect.setFillColor(color);
     }
 }
