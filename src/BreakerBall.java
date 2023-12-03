@@ -3,10 +3,12 @@ import acm.graphics.GObject;
 import acm.graphics.GOval;
 import acm.graphics.GPoint;
 import acm.program.GraphicsProgram;
+import acm.util.RandomGenerator;
 
 public class BreakerBall extends GCompound {
     private double AccelerationX = 0;
     private double AccelerationY = 0;
+    private double Vy0, Vx0;
     private double VelocityX;
     private double VelocityY;
     private double PositionX;
@@ -21,40 +23,34 @@ public class BreakerBall extends GCompound {
     /**
      * Full constructor.(AccelerationX,AccelerationY,VelocityX,VelocityY,PosX,PosY,Width,Height
      */
-    BreakerBall(double Ax, double Ay, double Vx, double Vy, double Px, double Py, double W, double H) {
+    BreakerBall(double Ax, double Ay, double Vy, double Px, double Py, double W, double H) {
+        this(Vy, Px, Py, W, H);
         AccelerationX = Ax;
         AccelerationY = Ay;
-        VelocityX = Vx;
-        VelocityY = Vy;
-        PositionX = Px;
-        PositionY = Py;
-        Width = W;
-        Height = H;
-        isActive = true;
-        construct();
     }
 
     /**
      * Basic constructor.(VelocityX,VelocityY,PosX,PosY,Width,Height
      */
-    BreakerBall(double Vx, double Vy, double Px, double Py, double W, double H) {
-        VelocityX = Vx;
+    BreakerBall(double Vy, double Px, double Py, double W, double H) {
+        VelocityX = 1; // just to work
         VelocityY = Vy;
+        randVX(true);
         PositionX = Px;
         PositionY = Py;
         setLocation(PositionX, PositionY);
         Width = W;
         Height = H;
-        isActive = true;
+        isActive = false;
         construct();
     }
 
     public void update() {
         if(isActive) {
-            updateStatesNoCollision();
             collideWithContainer();
             checkCollisionsWithObjects();
-            move(VelocityX, VelocityY);
+            updateStatesNoCollision();
+            setLocation(PositionX, PositionY);
         }
     }
 
@@ -68,6 +64,26 @@ public class BreakerBall extends GCompound {
         PositionY += VelocityY;
     }
 
+
+    // randomize vx in range 30 - 60 deg
+    private void randVX(boolean randSign){
+        VelocityX = Math.signum(VelocityX) * Math.abs(VelocityY) * Math.tan(Math.toRadians(randAngle()));
+        if(randSign)
+            VelocityX *= randSign();
+    }
+
+    private double randSign(){
+        if(RandomGenerator.getInstance().nextBoolean(0.5))
+            return -1;
+        else
+            return 1;
+    }
+
+    private double randAngle(){
+        return RandomGenerator.getInstance().nextDouble(30,60);
+    }
+
+
     private void collideWithContainer() {
         GPoint ReflectVec = BoxContainer.getContainer().reflect(PositionX, PositionY, Width, Height);
         if (ReflectVec == null){
@@ -77,14 +93,18 @@ public class BreakerBall extends GCompound {
             VelocityY *= ReflectVec.getY();
         }
     }
-
     private void handleOutOfBounds(){
-        GPoint center = BoxContainer.getContainer().getCenter();
-        setLocation(center);
-        PositionX = center.getX();
-        PositionY = center.getY();
-        setActive(false);
+        respawn();
         Breakout.getLevel().decrementLife();
+    }
+
+    public void respawn(){
+        GPoint resp = BoxContainer.getContainer().getRespawnPoint();
+        setLocation(resp);
+        PositionX = resp.getX();
+        PositionY = resp.getY();
+        setActive(false);
+        randVX(true);
     }
 
     private void construct() {
@@ -95,7 +115,7 @@ public class BreakerBall extends GCompound {
 
     private void checkCollisionsWithObjects() {
         GObject object = collideAndReturnObject();
-        if (object != null && object instanceof Brick) {
+        if (object instanceof Brick) {
             Brick brick = (Brick)object;
             brick.onCollision();
         }

@@ -14,8 +14,8 @@ import java.awt.event.*;
 
 public class Breakout extends GraphicsProgram {
 /** Width and height of application window in pixels */
-	public static final int APPLICATION_WIDTH = 1000;
-	public static final int APPLICATION_HEIGHT = 900;
+	public static final int APPLICATION_WIDTH = 700;
+	public static final int APPLICATION_HEIGHT = 1000;
 	private static final int DELTA_TIME = 10;
 
 	private static Breakout instance;
@@ -77,10 +77,10 @@ public class Breakout extends GraphicsProgram {
 				lastLevelType = sceneType;
 				break;
 			case SECOND_LEVEL:
-				//TODO
+				scene = new SecondLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
 				break;
 			case THIRD_LEVEL:
-				//TODO
+				scene = new ThirdLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
 				break;
 		}
 	}
@@ -99,7 +99,7 @@ public class Breakout extends GraphicsProgram {
 
 	private void playScene(){
 		removeAll();
-		IScene scene = this.scene;
+		IScene scene = Breakout.scene;
 		scene.setup();
 		while (!scene.isEnded()) {
 			scene.update();
@@ -115,9 +115,7 @@ public class Breakout extends GraphicsProgram {
 	public void mouseClicked(MouseEvent e){
 		if(scene != null && scene.isStarted() && !scene.isEnded()){
 			GObject object = getElementAt(e.getX(), e.getY());
-			if(object != null){
-				scene.mouseClicked(object);
-			}
+			scene.mouseClicked(object);
 		}
 	}
 }

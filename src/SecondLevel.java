@@ -1,19 +1,18 @@
-import acm.graphics.GPoint;
 import acm.program.GraphicsProgram;
 
-public class FirstLevel extends Level {
-    public FirstLevel(int width, int height) {
+public class SecondLevel extends Level {
+    public SecondLevel(int width, int height) {
         super(width, height);
-        paddleWidth = 200;
+        paddleWidth = 150;
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
         bricksPerRow = 5;
-        bricksRows = 2;
-        bricksGap = 4;
+        bricksRows = 3;
+        bricksGap = 6;
         brickHeight = 10;
         ballRadius = 10;
         brickYOffset = 70;
-        lives = 5;
+        lives = 3;
         brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
     }
 
@@ -23,7 +22,7 @@ public class FirstLevel extends Level {
         healthBar = new HealthBar(0, 0, width / 4, height / 10, lives);
         scoreBoard = new ScoreBoard(3 * width / 4, 0, width / 4, height / 10);
         container = new BoxContainer(0, height / 10, width, height);
-        ball = new BreakerBall(5, 200, 200, ballRadius * 2, ballRadius * 2);
+        ball = new BreakerBall(10, 200, 200, ballRadius * 2, ballRadius * 2);
         ball.respawn();
         paddle = new Paddle(paddleWidth, paddleHeight);
         paddle.setLocation( (width - paddleWidth) / 2, height - paddleYOffset);

@@ -10,8 +10,8 @@ public class BoxContainer {
     private double topY;
     private double rightX;
     private double bottomY;
-    public GPoint getCenter(){
-        return new GPoint((leftX+rightX)/2, (topY+bottomY)/2);
+    public GPoint getRespawnPoint(){
+        return new GPoint((leftX+rightX)/2, (topY+bottomY)/3);
     }
     /**
      * creates a basic box container(xTop, yTop,xBottom,yBottom)
@@ -25,6 +25,6 @@ public class BoxContainer {
     }
     public GPoint reflect(double x, double y, double w, double h){
         if(y+h>=bottomY) return null;                                    //out of bounds
-        else return new GPoint((x<=leftX||x+w>=rightX)?-1:1,(y<=topY)?-1:1);
+        else return new GPoint((x<=leftX||x+w>=rightX)?-1:1, (y<=topY)?-1:1);
     }
 }

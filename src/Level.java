@@ -32,7 +32,7 @@ public abstract class Level implements IScene{
     protected double height;
 
     protected Paddle paddle;
-    protected BreakerBall ball;
+    public BreakerBall ball;
     protected BricksManager bricksManager;
     protected BoxContainer container;
     protected int lives;
