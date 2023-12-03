@@ -119,7 +119,7 @@ public class BreakerBall extends GCompound implements ICollidable{
         double startY = getY() + Height / 2;
         double midX = getX() + Width / 2;
         double midY = getY() + Height / 2;
-        for(double angle = 0; angle <= 360; angle += 10){
+        for(double angle = 0; angle <= 360; angle += 45){
             double radians = Math.toRadians(angle);
             double xTurned = midX + (startX - midX) * Math.cos(radians) - (startY - midY) * Math.sin(radians);
             double yTurned = midY + (startX - midX) * Math.sin(radians) + (startY - midY) * Math.cos(radians);

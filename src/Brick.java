@@ -2,7 +2,7 @@ import java.awt.*;
 
 import acm.graphics.*;
 
-public class Brick extends GCompound {
+public class Brick extends GCompound implements ICollidable{
     private GRect rect;
     private int score;
 
