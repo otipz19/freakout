@@ -2,7 +2,7 @@ import acm.graphics.GCompound;
 import acm.graphics.GImage;
 import acm.graphics.GRect;
 
-public class Paddle extends GCompound {
+public class Paddle extends GCompound implements ICollidable{
     private static final String PADDLE_IMAGE = "images/paddle.jpg";
     private GImage body;
 
@@ -13,4 +13,8 @@ public class Paddle extends GCompound {
         add(this.body);
     }
 
+    @Override
+    public void onCollision(ICollidable other) {
+
+    }
 }

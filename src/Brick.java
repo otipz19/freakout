@@ -2,7 +2,7 @@ import java.awt.*;
 
 import acm.graphics.*;
 
-public class Brick extends GCompound {
+public class Brick extends GCompound implements ICollidable {
     private GRect rect;
     private int score;
 
@@ -16,9 +16,11 @@ public class Brick extends GCompound {
         add(rect);
     }
 
-    public void onCollision() {
-        Breakout.getLevel().addScore(score);
-        BricksManager.getInstance().brickDestroyed();
-        Breakout.removeObject(this);
+    public void onCollision(ICollidable other) {
+        if (other instanceof BreakerBall) {
+            Breakout.getLevel().addScore(score);
+            BricksManager.getInstance().brickDestroyed();
+            Breakout.removeObject(this);
+        }
     }
 }
