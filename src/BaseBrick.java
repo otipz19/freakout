@@ -41,14 +41,16 @@ public abstract class BaseBrick extends GCompound implements ICollidable {
                 BricksManager.getInstance().brickDestroyed();
                 switch (rng.nextInt(2)){
                     case 0:
-                        if(Breakout.getLevel().firstEnlargementBonus == null){
-                            EnlagementBonus a = new EnlagementBonus(getX(),getY());
+                        if(Breakout.getLevel().shouldSpawnEnlargementBonus &&
+                                Breakout.getLevel().firstEnlargementBonus == null){
+                            EnlargementBonus a = new EnlargementBonus(getX(),getY());
                             Breakout.getLevel().firstEnlargementBonus = a;
                             Breakout.addObject(a);
                         }
                         break;
                     case 1:
-                        if(Breakout.getLevel().firstSpeedBonus == null){
+                        if(Breakout.getLevel().shouldSpawnSpeedBonus &&
+                                Breakout.getLevel().firstSpeedBonus == null){
                             SpeedBonus a = new SpeedBonus(getX(),getY());
                             Breakout.getLevel().firstSpeedBonus = a;
                             Breakout.addObject(a);

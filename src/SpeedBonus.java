@@ -28,6 +28,7 @@ public class SpeedBonus extends Bonus{
     private void construct() {
         GRect ou = new GRect(0, 0, Width, Height);
         ou.setFilled(false);
+        ou.setColor(Color.GREEN);
         add(ou);
         GRect in = new GRect(5, 5, 10, 10);
         in.setColor(Color.GREEN);

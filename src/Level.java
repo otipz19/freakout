@@ -35,8 +35,11 @@ public abstract class Level implements IScene{
     protected ScoreBoard scoreBoard;
     protected ColorPalette palette;
     protected int score;
-    public EnlagementBonus firstEnlargementBonus = null;
+    public EnlargementBonus firstEnlargementBonus = null;
     public SpeedBonus firstSpeedBonus = null;
+
+    protected boolean shouldSpawnEnlargementBonus;
+    protected boolean shouldSpawnSpeedBonus;
 
     private GRect background;
 
@@ -58,6 +61,14 @@ public abstract class Level implements IScene{
         Breakout.addObject(healthBar);
         Breakout.addObject(scoreBoard);
         isStarted = true;
+    }
+
+    public boolean isShouldSpawnEnlargementBonus() {
+        return shouldSpawnEnlargementBonus;
+    }
+
+    public boolean isShouldSpawnSpeedBonus() {
+        return shouldSpawnSpeedBonus;
     }
 
     public void update() {

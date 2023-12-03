@@ -17,6 +17,8 @@ public class ThirdLevel extends Level {
         bricksManager.setBricksInRow(bricksPerRow);
         bricksManager.addReinforcedBricks(40);
         bricksManager.addUltraBricks(10);
+        shouldSpawnEnlargementBonus = true;
+        shouldSpawnSpeedBonus = true;
     }
 
     @Override

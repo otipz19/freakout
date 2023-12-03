@@ -16,6 +16,8 @@ public class SecondLevel extends Level {
         bricksManager.setRows(bricksRows);
         bricksManager.setBricksInRow(bricksPerRow);
         bricksManager.addReinforcedBricks(20);
+        shouldSpawnEnlargementBonus = true;
+        shouldSpawnSpeedBonus = false;
     }
 
     @Override

@@ -16,6 +16,8 @@ public class FirstLevel extends Level {
         createBricksManager();
         bricksManager.setRows(bricksRows);
         bricksManager.setBricksInRow(bricksPerRow);
+        shouldSpawnEnlargementBonus = false;
+        shouldSpawnSpeedBonus = false;
     }
 
     @Override
