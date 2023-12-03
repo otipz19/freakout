@@ -2,7 +2,6 @@ import acm.graphics.GCompound;
 import acm.graphics.GObject;
 import acm.graphics.GOval;
 import acm.graphics.GPoint;
-import acm.program.GraphicsProgram;
 
 public class BreakerBall extends GCompound implements ICollidable{
     private double AccelerationX = 0;
@@ -98,6 +97,9 @@ public class BreakerBall extends GCompound implements ICollidable{
 
     private void construct() {
         GOval ov = new GOval(0, 0, Width, Height);
+        ColorPallete pallete = Breakout.getLevel().getPallete();
+        ov.setColor(pallete.getBall());
+        ov.setFillColor(pallete.getBall());
         ov.setFilled(true);
         add(ov);
     }

@@ -2,15 +2,19 @@ import acm.graphics.GCompound;
 import acm.graphics.GImage;
 import acm.graphics.GRect;
 
+import java.awt.*;
+
 public class Paddle extends GCompound implements ICollidable{
-    private static final String PADDLE_IMAGE = "images/paddle.jpg";
-    private GImage body;
+    private GRect rect;
 
     private int width,height;
-    public Paddle(double width, double height) {
-        body = new GImage(PADDLE_IMAGE);
-        this.body.setSize(width, height);
-        add(this.body);
+    public Paddle(double x, double y, double width, double height, Color color) {
+        this.setLocation(x, y);
+        rect = new GRect(0, 0, width, height);
+        rect.setColor(color);
+        rect.setFillColor(color);
+        rect.setFilled(true);
+        add(rect);
     }
 
     @Override
