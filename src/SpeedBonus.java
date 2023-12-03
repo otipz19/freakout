@@ -1,11 +1,12 @@
 import acm.graphics.GOval;
 import acm.graphics.GRect;
+import acm.util.RandomGenerator;
 
 import java.awt.*;
 
 public class SpeedBonus extends Bonus{
     private double AccelerationX = 0;
-    private double AccelerationY = 0.3;
+    private double AccelerationY = 0.1;
     private double VelocityX = 0;
     private double VelocityY = 0;
     private double PositionX;
@@ -61,7 +62,8 @@ public class SpeedBonus extends Bonus{
     @Override
     void use() {
         BreakerBall B = BreakerBall.getBall();
-        B.setVelocity(B.getVelocityX()*1.3,B.getVelocityY()*1.3);
+        RandomGenerator r = new RandomGenerator();
+        B.setVelocity(B.getVelocityX()*r.nextDouble(0.8,1.2),B.getVelocityY()*1.3);
     }
 
     @Override

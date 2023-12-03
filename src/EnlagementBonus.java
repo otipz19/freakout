@@ -1,4 +1,5 @@
 import acm.graphics.GRect;
+import acm.util.RandomGenerator;
 
 public class EnlagementBonus extends Bonus{
     private double AccelerationX = 0;
@@ -57,7 +58,8 @@ public class EnlagementBonus extends Bonus{
     @Override
     void use() {
         Paddle P = Paddle.getInstance();
-        P.scale(1.2,1);
+        RandomGenerator r = new RandomGenerator();
+        P.scale(r.nextDouble(0.9,1.1),1);
     }
     @Override
     void checkIfOutOfBounds() {

@@ -6,8 +6,8 @@ public class ThirdLevel extends Level {
         paddleWidth = 150;
         paddleHeight = 20;
         paddleYOffset = paddleHeight * 3;
-        bricksPerRow = 5;
-        bricksRows = 3;
+        bricksPerRow = 10;
+        bricksRows = 5;
         bricksGap = 6;
         brickHeight = 10;
         ballRadius = 10;
@@ -24,7 +24,7 @@ public class ThirdLevel extends Level {
         healthBar = new HealthBar(0, 0, width / 4, height / 10, lives);
         scoreBoard = new ScoreBoard(3 * width / 4, 0, width / 4, height / 10);
         container = new BoxContainer(0, height / 10, width, height);
-        ball = new BreakerBall(10, 200, 200, ballRadius * 2, ballRadius * 2);
+        ball = new BreakerBall(3, 200, 200, ballRadius * 2, ballRadius * 2);
         paddle = new Paddle((width - paddleWidth) / 2, height - paddleYOffset, paddleWidth, paddleHeight, palette.getPaddle());
         Breakout.addObject(ball);
         Breakout.addObject(paddle);
