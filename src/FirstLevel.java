@@ -15,6 +15,6 @@ public class FirstLevel extends Level {
         brickYOffset = 70;
         lives = 3;
         brickWidth = (width - (bricksPerRow - 1) * bricksGap) / bricksPerRow;
-        palette = new FirstPalette();
+        palette = ColorPalette.FIRST_PALETTE;
     }
 }

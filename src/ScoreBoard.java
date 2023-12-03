@@ -13,7 +13,7 @@ public class ScoreBoard extends GCompound {
         this.width = width;
         this.height = height;
         label = new SmartLabel(0, 0, width, height, "0", FONT);
-        label.setColor(Color.WHITE);
+        label.setColor(ColorPalette.LIGHT_GRAY);
         setScore(0);
         add(label);
     }

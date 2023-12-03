@@ -1,5 +1,8 @@
+import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
+import com.sun.imageio.plugins.gif.GIFImageReader;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public abstract class BaseMenu implements IScene {
@@ -30,5 +33,13 @@ public abstract class BaseMenu implements IScene {
     @Override
     public void mouseMoved(MouseEvent e) {
 
+    }
+
+    protected void drawBackground(Color color){
+        GRect background = new GRect(width, height);
+        background.setColor(color);
+        background.setFillColor(color);
+        background.setFilled(true);
+        Breakout.addObject(background);
     }
 }

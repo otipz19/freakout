@@ -14,10 +14,10 @@ public class LevelMenu extends BaseMenu{
 
     @Override
     public void setup() {
-        Breakout.clearCanvas();
-        firstBtn = drawBtn(ySection * 3, "First level");
-        secondBtn = drawBtn(ySection * 7, "Second level");
-        thirdBtn = drawBtn(ySection * 11, "Third level");
+        drawBackground(ColorPalette.FIRST_PALETTE.background);
+        firstBtn = drawBtn(ySection * 3, "LEVEL 1", ColorPalette.FIRST_PALETTE);
+        secondBtn = drawBtn(ySection * 7, "LEVEL 2", ColorPalette.SECOND_PALETTE);
+        thirdBtn = drawBtn(ySection * 11, "LEVEL 3", ColorPalette.THIRD_PALETTE);
     }
 
     @Override
@@ -40,11 +40,13 @@ public class LevelMenu extends BaseMenu{
         }
     }
 
-    private Button drawBtn(double y, String text){
+    private Button drawBtn(double y, String text, ColorPalette palette){
         double x = xSection * 3;
         double width = xSection * 4;
         double height = ySection * 2;
         Button btn = new Button(x, y, width, height, text, FONT);
+        btn.setTextColor(ColorPalette.LIGHT_GRAY);
+        btn.setBackgroundColor(palette.getPaddle());
         Breakout.addObject(btn);
         return btn;
     }

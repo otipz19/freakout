@@ -1,5 +1,7 @@
 import acm.graphics.*;
 
+import java.awt.*;
+
 public class Button extends GCompound {
     private GRect rect;
     private SmartLabel label;
@@ -10,5 +12,14 @@ public class Button extends GCompound {
         add(rect);
         label = new SmartLabel(0, 0, width, height, text, font);
         add(label);
+    }
+
+    public void setTextColor(Color color){
+        label.setColor(color);
+    }
+
+    public void setBackgroundColor(Color color){
+        rect.setFillColor(color);
+        rect.setFilled(true);
     }
 }

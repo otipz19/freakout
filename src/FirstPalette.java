@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class FirstPalette extends ColorPalette {
-    public FirstPalette(){
+    protected FirstPalette(){
         background = new Color(0x541690);
         paddle = new Color(0xFF4949);
         ball = new Color(0xFF4949);
