@@ -36,8 +36,9 @@ public class UltraBrick extends BaseBrick {
                     double brickY = y - man.VERT_OFF - height + (man.VERT_OFF + height) * row;
                     ColorPalette palette = Breakout.getLevel().getPalette();
                     BaseBrick brick;
-                    brick = new SimpleBrick(brickX, brickY, width, height, palette.getBrickColor(row));
+                    brick = new SimpleBrick(brickX, brickY, width, height, Color.GRAY);
                     Breakout.addObject(brick);
+                    man.incrementBricksCount(1);
                 }
             }
         }

@@ -12,7 +12,7 @@ public class BreakerBall extends GCompound implements ICollidable{
     private double VelocityY;
     public void setVelocity(double vX, double vY){
         VelocityX = vX;
-        VelocityY = vY;
+        VelocityY = -vY;
     }
     public double getVelocityX(){return VelocityX;}
     public double getVelocityY(){return VelocityY;}
@@ -46,7 +46,7 @@ public class BreakerBall extends GCompound implements ICollidable{
      */
     BreakerBall(double Vy, double Px, double Py, double W, double H) {
         VelocityX = 1; // just to work
-        VelocityY = Vy;
+        VelocityY = -Vy;
         randVX(true);
         PositionX = Px;
         PositionY = Py;
@@ -67,8 +67,8 @@ public class BreakerBall extends GCompound implements ICollidable{
         }else if(Paddle.getInstance() != null){
             Paddle P = Paddle.getInstance();
             PositionX = P.getX()+P.getWidth()/2-Width/2;
-            PositionY = P.getY()-Height-5;
-            setLocation(P.getX()+P.getWidth()/2-Width/2,P.getY()-Height-5);
+            PositionY = P.getY()-Height-20;
+            setLocation(P.getX()+P.getWidth()/2-Width/2,P.getY()-Height-20);
             randVX(true);
         }
     }
@@ -89,9 +89,9 @@ public class BreakerBall extends GCompound implements ICollidable{
     }
 
 
-    // randomize vx in range 30 - 60 deg
+    /** randomize vx in range 30 - 60 deg*/
     private void randVX(boolean randSign){
-        VelocityX = Math.signum(VelocityX) * Math.abs(VelocityY) * Math.tan(Math.toRadians(randAngle()));
+        VelocityX = Math.signum(VelocityX) * Math.abs(VelocityY) * RandomGenerator.getInstance().nextDouble(1,2);
         if(randSign)
             VelocityX *= randSign();
     }
@@ -101,10 +101,6 @@ public class BreakerBall extends GCompound implements ICollidable{
             return -1;
         else
             return 1;
-    }
-
-    private double randAngle(){
-        return RandomGenerator.getInstance().nextDouble(30,60);
     }
 
 
@@ -148,13 +144,13 @@ public class BreakerBall extends GCompound implements ICollidable{
         double startY = getY() + Height / 2;
         double midX = getX() + Width / 2;
         double midY = getY() + Height / 2;
-        for(double angle = 0; angle <= 360; angle += 45){
+        for(double angle = 0; angle <= 360; angle +=45){
             double radians = Math.toRadians(angle);
             double xTurned = midX + (startX - midX) * Math.cos(radians) - (startY - midY) * Math.sin(radians);
             double yTurned = midY + (startX - midX) * Math.sin(radians) + (startY - midY) * Math.cos(radians);
             GObject object = Breakout.getObjectAt(xTurned, yTurned);
             if(object instanceof ICollidable && object != this && object != lastCollision){
-                if(angle == 0 || angle == 180){
+                if(angle == 0 || angle==180){
                     VelocityX *= -1;
                 }
                 else{

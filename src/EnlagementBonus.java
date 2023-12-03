@@ -35,6 +35,7 @@ public class EnlagementBonus extends Bonus{
             move();
             collideWithActivator();
             move(VelocityX, VelocityY);
+            checkIfOutOfBounds();
         }
     }
     @Override
@@ -64,8 +65,8 @@ public class EnlagementBonus extends Bonus{
     @Override
     void checkIfOutOfBounds() {
         if(PositionY>Breakout.getLevel().height){
-            Breakout.removeObject(this);
-            Breakout.getLevel().firstSpeedBonus=null;
+            Breakout.removeObject(Breakout.getLevel().firstEnlargementBonus);
+            Breakout.getLevel().firstEnlargementBonus=null;
         }
     }
 }

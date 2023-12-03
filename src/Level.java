@@ -69,13 +69,13 @@ public abstract class Level implements IScene{
 
     public void update() {
         if (isStarted && !isEnded()) {
-            ball.update();
             if(firstEnlargementBonus!=null){
                 firstEnlargementBonus.update();
             }
             if(firstSpeedBonus!=null){
                 firstSpeedBonus.update();
             }
+            ball.update();
         } else if (isStarted && isEnded) {
             end();
         }
