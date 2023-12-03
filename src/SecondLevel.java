@@ -37,6 +37,12 @@ public class SecondLevel extends Level {
     public void update() {
         if (isStarted && !isEnded()) {
             ball.update();
+            if(firstEnlargementBonus!=null){
+                firstEnlargementBonus.update();
+            }
+            if(firstSpeedBonus!=null){
+                firstSpeedBonus.update();
+            }
         } else if (isStarted && isEnded) {
             end();
         }
