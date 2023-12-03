@@ -1,3 +1,4 @@
+import acm.graphics.GLine;
 import acm.graphics.GPoint;
 
 public class BoxContainer {
@@ -29,7 +30,15 @@ public class BoxContainer {
         rightX=x2;
         bottomY=y2;
         Container = this;
+        drawUpperLine(x1, y1, x2);
     }
+
+    private static void drawUpperLine(double x1, double y1, double x2) {
+        GLine line = new GLine(x1, y1, x2, y1);
+        line.setColor(ColorPalette.LIGHT_GRAY);
+        Breakout.addObject(line);
+    }
+
     public GPoint reflect(double x, double y, double w, double h){
         if(y+h>=bottomY) return null;                                    //out of bounds
         else return new GPoint((x<=leftX||x+w>=rightX)?-1:1, (y<=topY)?-1:1);

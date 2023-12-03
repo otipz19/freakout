@@ -20,6 +20,6 @@ public class ScoreBoard extends GCompound {
 
     public void setScore(int score) {
         label.setLabel(Integer.toString(score));
-        label.setLocation(width - label.getWidth(), label.getY());
+        label.setLocation(4 * (width - label.getWidth()) / 5, label.getY());
     }
 }
