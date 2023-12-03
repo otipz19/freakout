@@ -1,3 +1,4 @@
+import acm.graphics.GLine;
 import acm.graphics.GPoint;
 
 public class BoxContainer {
@@ -6,21 +7,40 @@ public class BoxContainer {
     }
 
     static private BoxContainer Container;
-    private float TopX;
-    private float TopY;
-    private float BottomX;
-    private float BottomY;
+    private double leftX;
+    private double topY;
+    private double rightX;
+    private double bottomY;
+    public double getLeftX(){return leftX;};
+    public double getTopY(){return topY;};
+    public double getRightX(){return rightX;};
+    public double getBottomY(){return bottomY;};
+    public GPoint getCenter(){
+        return new GPoint((leftX+rightX)/2, (topY+bottomY)/2);
+    }
+    public GPoint getRespawnPoint() {
+        return new GPoint((leftX + rightX) / 2, (topY + bottomY) / 3);
+    }
     /**
      * creates a basic box container(xTop, yTop,xBottom,yBottom)
      */
-    BoxContainer(float x1, float y1, float x2, float y2){                             // Why ???
-        TopX=x1;
-        TopY=y1;
-        BottomX=x2;
-        BottomY=y2;
+    BoxContainer(double x1, double y1, double x2, double y2){
+        leftX=x1;
+        topY=y1;
+        rightX=x2;
+        bottomY=y2;
         Container = this;
+        drawUpperLine(x1, y1, x2);
     }
-    public GPoint reflect(float x, float y, float w, float h){
-        return(new GPoint((x<=TopX||x+w>=BottomX)?-1:1,(y<=TopY||y+h>=BottomY)?-1:1));
+
+    private static void drawUpperLine(double x1, double y1, double x2) {
+        GLine line = new GLine(x1, y1, x2, y1);
+        line.setColor(ColorPalette.LIGHT_GRAY);
+        Breakout.addObject(line);
+    }
+
+    public GPoint reflect(double x, double y, double w, double h){
+        if(y+h>=bottomY) return null;                                    //out of bounds
+        else return new GPoint((x<=leftX||x+w>=rightX)?-1:1, (y<=topY)?-1:1);
     }
 }

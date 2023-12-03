@@ -7,94 +7,126 @@
  * This file will eventually implement the game of Breakout.
  */
 
-import acm.graphics.*;
+import acm.graphics.GObject;
 import acm.program.*;
-import acm.util.*;
-import sun.security.x509.IPAddressName;
 
-import java.applet.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class Breakout extends GraphicsProgram {
 /** Width and height of application window in pixels */
-	public static final int APPLICATION_WIDTH = 1000;
+	public static final int APPLICATION_WIDTH = 600;
 	public static final int APPLICATION_HEIGHT = 900;
+	private static final int DELTA_TIME = 10;
 
-/** Dimensions of game board (usually the same) */
-	private static final int WIDTH = APPLICATION_WIDTH;
-	private static final int HEIGHT = APPLICATION_HEIGHT;
+	private static Breakout instance;
 
-/** Dimensions of the paddle */
-	private static final int PADDLE_WIDTH = 60;
-	private static final int PADDLE_HEIGHT = 10;
+	private static IScene scene;
 
-/** Offset of the paddle up from the bottom */
-	private static final int PADDLE_Y_OFFSET = 30;
+	private static GameResult lastGameResult;
+	private static GameResult bestGameResult = new GameResult(false, ScoreSerializer.getBestScore());
+	private static SceneType lastLevelType = SceneType.FIRST_LEVEL;
 
-/** Number of bricks per row */
-	private static final int NBRICKS_PER_ROW = 10;
+	public static GameResult getBestGameResult(){
+		return bestGameResult;
+	}
 
-/** Number of rows of bricks */
-	private static final int NBRICK_ROWS = 10;
+	public static GameResult getLastGameResult(){
+		return lastGameResult;
+	}
 
-/** Separation between bricks */
-	private static final int BRICK_SEP = 4;
+	public static void setLastGameResult(GameResult lastGameResult) {
+		Breakout.lastGameResult = lastGameResult;
+		if(bestGameResult == null || bestGameResult.getScore() < lastGameResult.getScore()){
+			bestGameResult = lastGameResult;
+			ScoreSerializer.setBestScore(bestGameResult.getScore());
+		}
+	}
 
-/** Width of a brick */
-	private static final int BRICK_WIDTH =
-	  (WIDTH - (NBRICKS_PER_ROW - 1) * BRICK_SEP) / NBRICKS_PER_ROW;
+	public static Level getLevel(){
+		if(scene instanceof Level){
+			return (Level) scene;
+		}
+		return null;
+	}
 
-/** Height of a brick */
-	private static final int BRICK_HEIGHT = 8;
-	private static final int DELTA_TIME = 50;
+	public static SceneType getLastLevelType(){
+		return lastLevelType;
+	}
 
-/** Radius of the ball in pixels */
-	private static final int BALL_RADIUS = 10;
+	public static void addObject(GObject object){
+		instance.add(object);
+	}
 
-/** Offset of the top brick row from the top */
-	private static final int BRICK_Y_OFFSET = 70;
+	public static void clearCanvas(){
+		instance.removeAll();
+	}
 
-/** Number of turns */
-	private static final int NTURNS = 3;
-	private Paddle paddle;
-	private int paddleWidth = 200;
-	private int paddleHeight = 100;
-	private int paddleY = HEIGHT*5/6;
-	private String paddleImage = "images/paddle.jpg";
+	public static GObject getObjectAt(double x, double y){
+		return instance.getElementAt(x, y);
+	}
 
-	private static GraphicsProgram instance;
+	public static void removeObject(GObject object){
+		instance.remove(object);
+	}
 
-	public static GraphicsProgram getInstance(){
-		return instance;
+	public static void setActiveScene(SceneType sceneType){
+		switch (sceneType){
+			case START_MENU:
+				scene = new StartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				break;
+			case LEVEL_MENU:
+				scene = new LevelMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				break;
+			case RESTART_MENU:
+				String label = lastGameResult.isWon() ? "YOU WON!" : "YOU LOST...";
+				scene = new RestartMenu(APPLICATION_WIDTH, APPLICATION_HEIGHT, label);
+				break;
+			case FIRST_LEVEL:
+				scene = new FirstLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				lastLevelType = sceneType;
+				break;
+			case SECOND_LEVEL:
+				scene = new SecondLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				lastLevelType = sceneType;
+				break;
+			case THIRD_LEVEL:
+				scene = new ThirdLevel(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+				lastLevelType = sceneType;
+				break;
+		}
 	}
 
 	public void init(){
 		instance = this;
+		addMouseListeners();
 	}
 
 	public void run() {
-		BrickGenerator generator = new BrickGenerator(0, 0, BRICK_SEP,  BRICK_SEP, NBRICKS_PER_ROW, NBRICK_ROWS, BRICK_WIDTH, BRICK_HEIGHT, this);
-		BoxContainer cont = new BoxContainer(0, 0, WIDTH, HEIGHT);
-		BreakerBall ball = new BreakerBall(25, 25, 200, 200, 50, 50);
-		add(ball);
-		paddle = new Paddle(paddleImage, paddleWidth, paddleHeight);
-		add(paddle, (WIDTH - paddleWidth) / 2, paddleY);
-		addMouseListeners();
-		while (true) {
-			ball.update();
+		setActiveScene(SceneType.START_MENU);
+		while(true){
+			playScene();
+		}
+	}
+
+	private void playScene(){
+		removeAll();
+		IScene scene = Breakout.scene;
+		scene.setup();
+		while (!scene.isEnded()) {
+			scene.update();
 			pause(DELTA_TIME);
 		}
 	}
 
 	public void mouseMoved(MouseEvent e){
-		int x;
-		if ((e.getX()+paddleWidth/2) > WIDTH)
-			x = WIDTH - paddleWidth;
-		else if ((e.getX()-paddleWidth/2) < 0)
-			x = 0;
-		else
-			x = e.getX()-paddleWidth/2;
-		paddle.setLocation(x, paddleY);
+		if(scene != null && scene.isStarted() && !scene.isEnded()){
+			scene.mouseMoved(e);
+		}
+	}
+	public void mouseClicked(MouseEvent e){
+		if(scene != null && scene.isStarted() && !scene.isEnded()){
+			GObject object = getElementAt(e.getX(), e.getY());
+			scene.mouseClicked(object);
+		}
 	}
 }

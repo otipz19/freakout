@@ -1,53 +1,81 @@
-import acm.graphics.*;
-import acm.program.GraphicsProgram;
+import acm.graphics.GCompound;
+import acm.graphics.GObject;
+import acm.graphics.GOval;
+import acm.graphics.GPoint;
+import acm.util.RandomGenerator;
 
-public class BreakerBall extends GCompound {
-    private GOval ball;
-    private float AccelerationX = 0;
-    private float AccelerationY = 0;
-    private float VelocityX;
-    private float VelocityY;
-    private float PositionX;
-    private float PositionY;
-    private float Width;
-    private float Height;
-    private BoxContainer container = BoxContainer.getContainer();
-    private GraphicsProgram program = Breakout.getInstance();
+public class BreakerBall extends GCompound implements ICollidable{
+    private double AccelerationX = 0;
+    private double AccelerationY = 0;
+    private double Vy0, Vx0;
+    private double VelocityX;
+    private double VelocityY;
+    public void setVelocity(double vX, double vY){
+        VelocityX = vX;
+        VelocityY = -vY;
+    }
+    public double getVelocityX(){return VelocityX;}
+    public double getVelocityY(){return VelocityY;}
+    private double PositionX;
+    private double PositionY;
+    private double Width;
+    private double Height;
+    private boolean isActive;
+
+    private ICollidable lastCollision;
+
+    static private BreakerBall Ball;
+    public static BreakerBall getBall() {
+        return Ball;
+    }
+    public void setActive(boolean opt){
+        isActive = opt;
+    }
 
     /**
      * Full constructor.(AccelerationX,AccelerationY,VelocityX,VelocityY,PosX,PosY,Width,Height
      */
-    BreakerBall(float Ax, float Ay, float Vx, float Vy, float Px, float Py, float W, float H) {
+    BreakerBall(double Ax, double Ay, double Vy, double Px, double Py, double W, double H) {
+        this(Vy, Px, Py, W, H);
         AccelerationX = Ax;
         AccelerationY = Ay;
-        VelocityX = Vx;
-        VelocityY = Vy;
-        PositionX = Px;
-        PositionY = Py;
-        Width = W;
-        Height = H;
-        construct();
     }
 
     /**
      * Basic constructor.(VelocityX,VelocityY,PosX,PosY,Width,Height
      */
-    BreakerBall(float Vx, float Vy, float Px, float Py, float W, float H) {
-        VelocityX = Vx;
-        VelocityY = Vy;
+    BreakerBall(double Vy, double Px, double Py, double W, double H) {
+        VelocityX = 1; // just to work
+        VelocityY = -Vy;
+        randVX(true);
         PositionX = Px;
         PositionY = Py;
         setLocation(PositionX, PositionY);
         Width = W;
         Height = H;
+        isActive = false;
         construct();
+        Ball = this;
     }
 
     public void update() {
-        updateStatesNoCollision();
-        collideWithContainer();
-        collideWithObjects();
-        move(VelocityX, VelocityY);
+        if(isActive) {
+            collideWithContainer();
+            checkCollisionsWithObjects();
+            updateStatesNoCollision();
+            setLocation(PositionX, PositionY);
+        }else if(Paddle.getInstance() != null){
+            Paddle P = Paddle.getInstance();
+            PositionX = P.getX()+P.getWidth()/2-Width/2;
+            PositionY = P.getY()-Height-20;
+            setLocation(P.getX()+P.getWidth()/2-Width/2,P.getY()-Height-20);
+            randVX(true);
+        }
+    }
+
+    @Override
+    public void onCollision(ICollidable other) {
+
     }
 
     /**
@@ -60,116 +88,81 @@ public class BreakerBall extends GCompound {
         PositionY += VelocityY;
     }
 
+
+    /** randomize vx in range 30 - 60 deg*/
+    private void randVX(boolean randSign){
+        VelocityX = Math.abs(VelocityY) * RandomGenerator.getInstance().nextDouble(0.7,1.3);
+        if(randSign)
+            VelocityX *= randSign();
+    }
+
+    private double randSign(){
+        if(RandomGenerator.getInstance().nextBoolean(0.5))
+            return -1;
+        else
+            return 1;
+    }
+
+
     private void collideWithContainer() {
-        GPoint ReflectVec = container.reflect(PositionX, PositionY, Width, Height);
-        VelocityX *= ReflectVec.getX();
-        VelocityY *= ReflectVec.getY();
+        GPoint ReflectVec = BoxContainer.getContainer().reflect(PositionX, PositionY, Width, Height);
+        if (ReflectVec == null){
+            handleOutOfBounds();
+        } else {
+            VelocityX *= ReflectVec.getX();
+            VelocityY *= ReflectVec.getY();
+            AudioManager.playBounce();
+        }
+    }
+
+    private void handleOutOfBounds(){
+        GPoint center = BoxContainer.getContainer().getCenter();
+        setLocation(center);
+        PositionX = center.getX();
+        PositionY = center.getY();
+        setActive(false);
+        Breakout.getLevel().decrementLife();
     }
 
     private void construct() {
         GOval ov = new GOval(0, 0, Width, Height);
+        ColorPalette pallete = Breakout.getLevel().getPalette();
+        ov.setColor(pallete.getBall());
+        ov.setFillColor(pallete.getBall());
         ov.setFilled(true);
         add(ov);
-        ball = ov;
     }
 
-    private void collideWithObjects() {
-        CollisionInfo collisionInfo = getObjectAtColliderPoints();
-        if (collisionInfo != null) {
-            GObject object = collisionInfo.getObject();
-            if (object instanceof Paddle || object instanceof Brick) {
-                GLine side = getClosestSide(object, collisionInfo.getCollisionPoint());
-                GPoint origin = new GPoint(VelocityX, VelocityY);
-                GPoint reflected = getReflectedVector(origin, side);
-                VelocityY = (float)reflected.getY();
-                VelocityX = (float)reflected.getX();
-            }
-        }
-    }
 
-    private CollisionInfo getObjectAtColliderPoints() {
-        for (double y = getY(); y <= getY() + Height; y += Height / 2) {
-            for (double x = getX(); x <= getX() + Width; x += Width / 2) {
-                GObject object = program.getElementAt(x, y);
-                if (object != null && object != this) {
-                    return new CollisionInfo(x, y, object);
+    /**
+     * Checks collisions by 8 points.
+     * Each point is got by rotating around the centre of ball,
+     * starting from the centre of right side of circumscribed square
+     */
+    private void checkCollisionsWithObjects() {
+        double startX = getX() + Width;
+        double startY = getY() + Height / 2;
+        double midX = getX() + Width / 2;
+        double midY = getY() + Height / 2;
+        for(double angle = 0; angle <= 360; angle +=45){
+            double radians = Math.toRadians(angle);
+            double xTurned = midX + (startX - midX) * Math.cos(radians) - (startY - midY) * Math.sin(radians);
+            double yTurned = midY + (startX - midX) * Math.sin(radians) + (startY - midY) * Math.cos(radians);
+            GObject object = Breakout.getObjectAt(xTurned, yTurned);
+            if(object instanceof ICollidable && object != this && object != lastCollision){
+                if(angle == 0 || angle==180){
+                    VelocityX *= -1;
                 }
+                else{
+                    VelocityY *= -1;
+                }
+                ICollidable collidable = (ICollidable)object;
+                lastCollision = collidable;
+                collidable.onCollision(this);
+                AudioManager.playBounce();
+                return;
             }
         }
-        return null;
-    }
-
-    private GLine getClosestSide(GObject object, GPoint collisionPoint){
-        //Corner vertices of collided object
-        GPoint leftUp = new GPoint(object.getX(), object.getY());
-        GPoint rightUp = new GPoint(object.getX() + object.getWidth(), object.getY());
-        GPoint rightDown = new GPoint(object.getX() + object.getWidth(), object.getY() + object.getHeight());
-        GPoint leftDown = new GPoint(object.getX(), object.getY() + object.getHeight());
-
-        //Sides of collided object
-        GLine upSide = getSide(leftUp, rightUp);
-        GLine downSide = getSide(leftDown, rightDown);
-        GLine leftSide = getSide(leftUp, leftDown);
-        GLine rightSide = getSide(rightUp, rightDown);
-
-        //Pretty stupid way to find the closest side
-        double minDistance = getDistanceToMid(collisionPoint, upSide);
-        GLine closestSide = upSide;
-        double curDistance = getDistanceToMid(collisionPoint, downSide);
-        if(curDistance < minDistance){
-            closestSide = downSide;
-            minDistance = curDistance;
-        }
-        curDistance = getDistanceToMid(collisionPoint, leftSide);
-        if(curDistance < minDistance){
-            closestSide = leftSide;
-            minDistance = curDistance;
-        }
-        curDistance = getDistanceToMid(collisionPoint, rightSide);
-        if(curDistance < minDistance){
-            closestSide = rightSide;
-        }
-
-        return closestSide;
-    }
-
-    private GLine getSide(GPoint start, GPoint end){
-        return new GLine(start.getX(), start.getY(), end.getX(), end.getY());
-    }
-
-    private double getDistanceToMid(GPoint point, GLine line){
-        GPoint mid = getMidPoint(line);
-        double x = point.getX() - mid.getX();
-        double y = point.getY() - mid.getY();
-        return Math.sqrt(x * x + y * y);
-    }
-
-    private GPoint getMidPoint(GLine line){
-        GPoint start = line.getStartPoint();
-        GPoint end = line.getEndPoint();
-        return new GPoint((start.getX() + end.getX()) / 2, (start.getY() + end.getY()) / 2);
-    }
-
-    private GPoint getReflectedVector(GPoint vector, GLine line){
-        GPoint normalVec = getNormalVector(line);
-        return subtract(vector, productByScalar(productByScalar(normalVec, dotProduct(vector, normalVec) / dotProduct(normalVec, normalVec)), 2));
-    }
-
-    private GPoint getNormalVector(GLine line){
-        GPoint start = line.getStartPoint();
-        GPoint end = line.getEndPoint();
-        return new GPoint(start.getY() - end.getY(), end.getX() - start.getX());
-    }
-
-    private double dotProduct(GPoint first, GPoint second){
-        return first.getX() * second.getX() + first.getY() * second.getY();
-    }
-
-    private GPoint subtract(GPoint first, GPoint second){
-        return new GPoint(first.getX() - second.getX(), first.getY() - second.getY());
-    }
-
-    private GPoint productByScalar(GPoint vector, double scalar){
-        return new GPoint(vector.getX() * scalar, vector.getY() * scalar);
+        lastCollision = null;
     }
 }
