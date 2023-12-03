@@ -1,8 +1,9 @@
-import acm.program.GraphicsProgram;
+import acm.util.RandomGenerator;
+
 import java.awt.*;
 
 public class BricksManager {
-    private static final int BRICK_SCORE = 5;
+    private static final RandomGenerator rng = RandomGenerator.getInstance();
     private static BricksManager instance;
     private int bricksCount;
 
@@ -17,7 +18,14 @@ public class BricksManager {
             for(int brickIndex = 0; brickIndex < bricksInRow; brickIndex++){
                 double brickX = x + (brickHorizontalOffset + brickWidth) * brickIndex;
                 double brickY = y + (brickVerticalOffset + brickHeight) * row;
-                Brick brick = new Brick(brickX, brickY, brickWidth, brickHeight, getColor(row), BRICK_SCORE);
+                ColorPalette palette = Breakout.getLevel().getPalette();
+                BaseBrick brick;
+                if(rng.nextInt(0, 10) > 1){
+                    brick = new SimpleBrick(brickX, brickY, brickWidth, brickHeight, palette.getBrickColor(row));
+                }
+                else{
+                    brick = new ReinforcedBrick(brickX, brickY, brickWidth, brickHeight, palette.getBrickColor(row));
+                }
                 Breakout.addObject(brick);
             }
         }
@@ -29,21 +37,5 @@ public class BricksManager {
 
     public boolean anyBricksPresent(){
         return bricksCount > 0;
-    }
-
-    private static Color getColor(int row){
-        row %= 5;
-        switch (row){
-            case 0:
-                return Color.RED;
-            case 1:
-                return Color.ORANGE;
-            case 2:
-                return Color.YELLOW;
-            case 3:
-                return Color.GREEN;
-            default:
-                return Color.BLUE;
-        }
     }
 }

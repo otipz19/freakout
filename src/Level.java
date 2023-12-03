@@ -1,4 +1,4 @@
-import acm.graphics.GObject;
+import acm.graphics.*;
 
 import java.awt.event.MouseEvent;
 
@@ -40,9 +40,11 @@ public abstract class Level implements IScene{
     protected boolean isEnded;
     protected HealthBar healthBar;
     protected ScoreBoard scoreBoard;
-
+    protected ColorPalette palette;
     protected int score;
     protected EnlagementBonus firstEnlargementBonus = null;
+
+    private GRect background;
 
     public Level(int width, int height) {
         this.width = width;
@@ -54,6 +56,10 @@ public abstract class Level implements IScene{
     }
 
     public abstract void update();
+
+    public ColorPalette getPalette(){
+        return palette;
+    }
 
     public boolean isStarted() {
         return isStarted;
@@ -105,5 +111,13 @@ public abstract class Level implements IScene{
     protected void end(){
         Breakout.setLastGameResult(new GameResult(isWon(), score));
         Breakout.setActiveScene(SceneType.RESTART_MENU);
+    }
+
+    protected void drawBackground(){
+        background = new GRect(0, 0, width, height);
+        background.setColor(palette.getBackground());
+        background.setFillColor(palette.getBackground());
+        background.setFilled(true);
+        Breakout.addObject(background);
     }
 }
