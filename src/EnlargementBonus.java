@@ -1,21 +1,27 @@
 import acm.graphics.GRect;
 import acm.util.RandomGenerator;
-
 import java.awt.*;
 
-public class EnlargementBonus extends Bonus{
-    private double AccelerationX = 0;
-    private double AccelerationY = 0;
-    private double VelocityX = 0;
-    private double VelocityY = 3;
-    private double PositionX;
-    private double PositionY;
-    private double Width =20;
-    private double Height=20;
-    private boolean isActive;
+/**
+ * The EnlargementBonus class represents a bonus that enlarges the paddle upon activation.
+ */
+public class EnlargementBonus extends Bonus {
+
+    private double AccelerationX = 0; // X-axis acceleration
+    private double AccelerationY = 0; // Y-axis acceleration
+    private double VelocityX = 0; // X-axis velocity
+    private double VelocityY = 3; // Y-axis velocity
+    private double PositionX; // X-coordinate of the bonus
+    private double PositionY; // Y-coordinate of the bonus
+    private double Width = 20; // Width of the bonus
+    private double Height = 20; // Height of the bonus
+    private boolean isActive; // Flag indicating whether the bonus is active
 
     /**
-     * Basic constructor.(PosX,PosY)
+     * Basic constructor that sets the position of the bonus.
+     *
+     * @param Px The X-coordinate of the bonus.
+     * @param Py The Y-coordinate of the bonus.
      */
     EnlargementBonus(double Px, double Py) {
         PositionX = Px;
@@ -24,34 +30,51 @@ public class EnlargementBonus extends Bonus{
         isActive = true;
         construct();
     }
+
+    /**
+     * Constructs the graphical representation of the bonus.
+     */
     private void construct() {
-        GRect ou = new GRect(0, 0, Width, Height);
-        ou.setFilled(false);
-        ou.setColor(Color.RED);
-        add(ou);
-        GRect in = new GRect(5, 5, 10, 10);
-        in.setFilled(true);
-        in.setFillColor(Color.RED);
-        add(in);
+        GRect outerRect = new GRect(0, 0, Width, Height);
+        outerRect.setFilled(false);
+        outerRect.setColor(Color.RED);
+        add(outerRect);
+
+        GRect innerRect = new GRect(5, 5, 10, 10);
+        innerRect.setFilled(true);
+        innerRect.setFillColor(Color.RED);
+        add(innerRect);
     }
+
+    /**
+     * Updates the bonus state by moving and checking for collisions.
+     */
     public void update() {
-        if(isActive) {
+        if (isActive) {
             move();
             collideWithActivator();
             move(VelocityX, VelocityY);
             checkIfOutOfBounds();
         }
     }
+
+    /**
+     * Handles the collision with the activator (paddle) and triggers the bonus effect.
+     */
     @Override
     void collideWithActivator() {
-        Paddle P = Paddle.getInstance();
-        if(P != null && (P.getX()<PositionX+Width&&P.getX()+P.getWidth()>PositionX)&&(P.getY()<PositionY+Height&&P.getY()+P.getHeight()>PositionY)){
+        Paddle paddle = Paddle.getInstance();
+        if (paddle != null && (paddle.getX() < PositionX + Width && paddle.getX() + paddle.getWidth() > PositionX)
+                && (paddle.getY() < PositionY + Height && paddle.getY() + paddle.getHeight() > PositionY)) {
             use();
             Breakout.removeObject(this);
-            Breakout.getLevel().firstEnlargementBonus=null;
+            Breakout.getLevel().firstEnlargementBonus = null;
         }
     }
 
+    /**
+     * Moves the bonus based on its velocity and acceleration.
+     */
     @Override
     void move() {
         VelocityX += AccelerationX;
@@ -60,17 +83,24 @@ public class EnlargementBonus extends Bonus{
         PositionY += VelocityY;
     }
 
+    /**
+     * Applies the bonus effect, enlarging the paddle.
+     */
     @Override
     void use() {
-        Paddle P = Paddle.getInstance();
-        RandomGenerator r = new RandomGenerator();
-        P.scale(r.nextDouble(1,1.1),1);
+        Paddle paddle = Paddle.getInstance();
+        RandomGenerator randomGenerator = new RandomGenerator();
+        paddle.scale(randomGenerator.nextDouble(1, 1.1), 1);
     }
+
+    /**
+     * Checks if the bonus is out of bounds and removes it if necessary.
+     */
     @Override
     void checkIfOutOfBounds() {
-        if(PositionY>Breakout.getLevel().height){
+        if (PositionY > Breakout.getLevel().height) {
             Breakout.removeObject(Breakout.getLevel().firstEnlargementBonus);
-            Breakout.getLevel().firstEnlargementBonus=null;
+            Breakout.getLevel().firstEnlargementBonus = null;
         }
     }
 }

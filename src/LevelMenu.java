@@ -1,14 +1,20 @@
 import acm.graphics.GObject;
-import acm.program.GraphicsProgram;
 
-import java.awt.event.MouseEvent;
-
-public class LevelMenu extends BaseMenu{
+/**
+ * The LevelMenu class represents a menu for selecting game levels.
+ */
+public class LevelMenu extends BaseMenu {
     private Button firstBtn;
     private Button secondBtn;
     private Button thirdBtn;
 
-    public LevelMenu(double width, double height){
+    /**
+     * Creates a new LevelMenu with the specified width and height.
+     *
+     * @param width  The width of the menu.
+     * @param height The height of the menu.
+     */
+    public LevelMenu(double width, double height) {
         super(width, height);
     }
 
@@ -26,22 +32,34 @@ public class LevelMenu extends BaseMenu{
         return firstBtn != null && secondBtn != null && thirdBtn != null;
     }
 
-    public void mouseClicked(GObject object){
-        if(object == firstBtn){
+    /**
+     * Handles mouse click events in the LevelMenu.
+     *
+     * @param object The GObject that was clicked.
+     */
+    @Override
+    public void mouseClicked(GObject object) {
+        if (object == firstBtn) {
             isClicked = true;
             Breakout.setActiveScene(SceneType.FIRST_LEVEL);
-        }
-        else if(object == secondBtn){
+        } else if (object == secondBtn) {
             isClicked = true;
             Breakout.setActiveScene(SceneType.SECOND_LEVEL);
-        }
-        else if(object == thirdBtn){
+        } else if (object == thirdBtn) {
             isClicked = true;
             Breakout.setActiveScene(SceneType.THIRD_LEVEL);
         }
     }
 
-    private Button drawBtn(double y, String text, ColorPalette palette){
+    /**
+     * Draws a button on the LevelMenu with the specified parameters.
+     *
+     * @param y       The y-coordinate of the button.
+     * @param text    The text to display on the button.
+     * @param palette The color palette to use for the button.
+     * @return The created Button object.
+     */
+    private Button drawBtn(double y, String text, ColorPalette palette) {
         double x = xSection * 3;
         double width = xSection * 4;
         double height = ySection * 2;

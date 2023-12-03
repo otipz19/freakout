@@ -1,6 +1,9 @@
 import acm.graphics.GCompound;
 import acm.graphics.GImage;
 
+/**
+ * The HealthBar class represents the health bar that displays the player's remaining lives.
+ */
 public class HealthBar extends GCompound {
     private GImage firstHeart;
     private GImage secondHeart;
@@ -11,7 +14,10 @@ public class HealthBar extends GCompound {
     private double heartGap;
     private double height;
 
-    public HealthBar(double x, double y, double width, double height, int currentHealth){
+    /**
+     * Creates a new HealthBar with the specified position, size, and initial health.
+     */
+    public HealthBar(double x, double y, double width, double height, int currentHealth) {
         this.setLocation(x, y);
         this.currentHealth = currentHealth;
         this.height = height;
@@ -20,8 +26,10 @@ public class HealthBar extends GCompound {
         drawHearts();
     }
 
-
-    public void decrementLife(){
+    /**
+     * Decrements the player's life and updates the displayed hearts accordingly.
+     */
+    public void decrementLife() {
         currentHealth--;
         drawHearts();
     }
